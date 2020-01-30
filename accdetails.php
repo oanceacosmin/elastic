@@ -13,7 +13,6 @@ if (!isLoggedIn()) {
         <?php include("header.php");?>
         <?php include("troubleshootingbar.php");?>
               
-<body id="home" data-spy="scroll" data-target="#main-nav" class="main-body" background= "img/Background-website-01.jpg">
               
     <div class="row" ><!-- Content Starts -->
         <div class="col col-lg-7 offset-lg-2 col-md-11 offset-md-1 col-sm-12 col-xs-12" style="margin-top:30px;" id="content">
@@ -88,34 +87,10 @@ if (!isLoggedIn()) {
                               </div>
                              </div>
                             </div>                            
-                            <div class="row">
-                                <div class="col col-sm12 col-lg-6">
-                                <div class="form-group">
-                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="dropdownCheck2">
-                                    <label class="form-check-label" for="dropdownCheck2">
-                                      Remember me
-                                    </label>
-                                  </div>
-                                </div>
-                                </div>
-                                <div class="col col-sm-12 col-lg-6">
-                                    <label class="form-check-label" for="dropdownCheck2">Department</label>
-                                  <div class="form-group">
-                                    <div class="btn-group">
-                                      <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Right-aligned menu</button>
-                                      <div class="dropdown-menu dropdown-menu-right">
-                                        <button class="dropdown-item" type="button">Action</button>
-                                        <button class="dropdown-item" type="button">Another action</button>
-                                        <button class="dropdown-item" type="button">Something else here</button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                            </div>
+
                 <div class="form-group">
                   <label for="bio">Bio</label>
-                  <textarea class="form-control" name="editor1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid unde at fugiat explicabo temporibus, tempora animi sunt iusto quod beatae optio veritatis velit natus odit error! Possimus esse quisquam quibusdam eveniet autem! Minus dolore quisquam nemo similique doloribus perspiciatis tempore.</textarea>
+                  <textarea class="form-control" name="editor1" style="height:150px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid unde at fugiat explicabo temporibus, tempora animi sunt iusto quod beatae optio veritatis velit natus odit error! Possimus esse quisquam quibusdam eveniet autem! Minus dolore quisquam nemo similique doloribus perspiciatis tempore.</textarea>
                 </div>
             <!--    <button class="btn btn-primary btn-block">Save Details</button>  ---->
                 
@@ -248,13 +223,13 @@ if (!isLoggedIn()) {
                  
             <!-- Retrieve all incidents posts from logged user-->
            <tr> <?php 
-            include 'database.php';
+            include('database.php');
             $email = $_SESSION["userEmail"];
-            $sql = "SELECT * FROM incposts WHERE incEmail='$email'"; 
+            $sql = "SELECT * FROM incidposts WHERE incEmail='$email'"; 
             $result = mysqli_query($conn, $sql);
               
             
-            if (mysqli_num_rows($result) == 0){
+            if (!mysqli_num_rows($result)){
                 $alert = "You have no active posts.";
                 alertMessage($alert);
                 mysqli_close($conn);
@@ -268,19 +243,25 @@ if (!isLoggedIn()) {
                      <th>Post Title</th>
                      <th></th><th></th></tr>";
                      
-                 
+                // Print content retrieved from database
                 while($row = mysqli_fetch_assoc($result)){
-                    $name =  $row['postEmail'];
-                    $date =  $row['postDate'];
-                    $cat =  $row['postCat'];
-                    $title =  $row['postTitle'];
+                    $name =  $row['incEmail'];
+                    $date =  $row['incDate'];
+                    $desc =  $row['incDesc'];
+                    $title =  $row['incTitle'];
+                   
+                if(strlen($title)>70){
+                    $title=substr($title, 0, 70) . "...";}
+                if(strlen($desc)>70){
+                    $desc=substr($desc, 0, 70) . "...";}
+                        
                     echo "<tr>
-                     <th>$name</th>
-                     <th>$date</th>
-                     <th>$cat</th>
-                     <th>$title</th>
-                     <th><button class='btn btn-primary btn-block'>Edit Post</button></th>
-                     <th><button class='btn btn-danger btn-block'>Delete Post</button></th>
+                     <td>$name</td>
+                     <td>$date</td>
+                     <td>$desc</td>
+                     <td>$title</td>
+                     <td><button class='btn btn-primary btn-block'>Edit Post</button></td>
+                     <td><button class='btn btn-danger btn-block'>Delete Post</button></td>
                      
                  </tr>";
                     
@@ -299,49 +280,7 @@ if (!isLoggedIn()) {
         </div>                          
              </div>                                                  
             </div><!-- Content ends, Sidebar to be added after this -->
-            
-        <div class="col col-lg-3 col-md-11 offset-md-1 col-xs-12 ml-auto" style="margin-top:30px; text-align: left;">
-          <div class="row">
-              <div class="col-lg-12 col-md-6 col-sm-12 col-xs-12"  style="padding:10px;">
-                 <div class="card">
-                <div class="card-header bg-dark">
-                    <a href="allNews.php" class="rightSideContent text-light"><h3>News Feed</h3></a> 
-                    </div>
-            <div class="card">   
-            <div class="card-body bg-light">
-            <div class="row">  
-            <div class="col col-md-12"> 
-             <h4><a href="#">Charity event - Hosting Clothing Sales</a></h4>
-            <h6>BY: <a href="#">Username222 </a>ON: 10.12.2019</h6>
-               <p>Welcome to my event, I am looking forward to have your support in etc etcelcome to my event, I am looking forward to have your support i....</p>
-            </div></div></div>
-              </div>
-            <div class="card">   
-            <div class="card-body bg-light">
-            <div class="row">  
-            <div class="col col-md-12"> 
-             <h4><a href="#">Charity event - Hosting Clothing Sales</a></h4>
-            <h6>BY: <a href="#">Username222 </a>ON: 10.12.2019</h6>
-               <p>Welcome to my event, I am looking forward to have your support in etc etcelcome to my event, I am looking forward to have your support in ...</p>
-            </div></div></div>
-              </div>
-
-                  </div>
-              </div>
-              <div class="col-lg-12 col-md-6 col-sm-12 col-xs-12" style="padding:10px;">
-                 <div class="card">
-                      <div class="card-header bg-dark">
-                <a href="#" class="rightSideContent text-light" data-target="incidents"><h3>Incidents</h3></a> 
-                       </div>
-                      <div class="card-body bg-light">
-                            <h4>This is a post name retrieved from database.</h4>
-                           <p>Content </p> 
-                            <p> Username</p>
-                    </div>
-                </div>
-              </div>
-          </div>
-        </div>
+ 
         </div> <!-- First row ends -->
         
     <?php include("footer.php");?>

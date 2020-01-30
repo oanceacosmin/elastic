@@ -67,7 +67,7 @@
               <div class="col-lg-12 col-md-6 col-sm-12 col-xs-12" style="padding:10px;">
                 <div class="card">
                 <div class="card-header bg-dark">
-                    <a href="allNews.php" class="rightSideContent text-light"><h3>Latest Incidents</h3></a> 
+                    <a href="allincidents.php" class="rightSideContent text-light"><h3>Latest Incidents</h3></a> 
                 </div>
                       
 
@@ -79,17 +79,14 @@
                     $resultInc = mysqli_query($conn, $sqlInc);
                     $time_end = microtime_float();
                     $time = $time_end - $time_start;
-                    
+                    echo '<div class="alert alert-primary" role="alert"> Query execution time: ' . $time * 1000 . " Milliseconds</div>";
                     if(!mysqli_num_rows($resultInc)){
                     $alert = "There are no active posts.";
                     alertMessage($alert);
-                    echo '<div class="alert alert-primary" role="alert">
-            Query execution time: 
-' . $time * 1000 . " Milliseconds</div>";
                     //mysqli_close($conn);
                     
                 } else{
-                    echo '<div class="alert alert-primary" role="alert"> Query took: ' . $time * 1000 . " Milliseconds</div>";
+ 
                     while($row = mysqli_fetch_assoc($resultInc)){
                     $postID = $row['incID'];
                     $name =  $row['incEmail'];
@@ -111,11 +108,10 @@
                 <h4><a href="showPost.php?id=<?php echo $postID;?>"><?php
                     echo $title;?></a></h4>
                 <h6>By: <a href="#"><?php echo $name; ?></a> On: <?php echo $date;?></h6>
-                   <p><?php   
-                        if(strlen($content)>250){
+                   <p><?php
+                        if(strlen($content)>150){
                             $content=substr($content, 0, 150) . "...";}
-                                
-                                        echo htmlentities($content);  ?></p>
+                        echo htmlentities($content);  ?></p>
                             </div>
                         </div>
                      </div>
