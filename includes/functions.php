@@ -148,38 +148,6 @@ function getSelectCategories(){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //Function for showing all attractions in dropdown select options
 function showAllAttractions(){
     //Database Connection
@@ -210,6 +178,8 @@ function showAllTimes(){
         echo "<option value = '$time'>$time</option>";
     }}
 
+
+
 function showCurrentUserDetails(){
     include 'database.php';
     $userID = $_SESSION['userID'];
@@ -232,6 +202,8 @@ function showCurrentUserDetails(){
      mysqli_close($conn);
 }
 
+
+
 function updateBookingDate($date, $ticketID){
      include 'database.php';
     $sql = "UPDATE ticketbookings SET Date='$date' WHERE ticketID='$ticketID'";
@@ -245,6 +217,8 @@ function updateBookingDate($date, $ticketID){
     
 }
 
+
+
 function updateBookingsNumber($tickets, $ticketID){
     include 'database.php';
     $sql = "UPDATE ticketbookings SET numberOfTickets='$tickets' WHERE ticketID='$ticketID'";
@@ -256,6 +230,8 @@ function updateBookingsNumber($tickets, $ticketID){
     mysqli_close($conn);
     
 }
+
+
 function updateHomeAddress($newAddress, $userID){
     include 'database.php';
     $query = "UPDATE userdetails SET homeAddress='$newAddress' WHERE userID='$userID'";
@@ -270,6 +246,8 @@ function updateHomeAddress($newAddress, $userID){
         $_SESSION['homeAddress'] = $newAddress;
         mysqli_close($conn);
     }}
+
+
 function updateHomeCity($newCity, $userID){
      include 'database.php';
     $query = "UPDATE userdetails SET homeCity='$newCity' WHERE userID='$userID'";
@@ -285,7 +263,9 @@ function updateHomeCity($newCity, $userID){
         mysqli_close($conn);
     } 
 }
-    
+
+
+//
 function updatePostCode($newPostCode, $userID){
      include 'database.php';
     $query = "UPDATE userdetails SET postCode='$newPostCode' WHERE userID='$userID'";
@@ -300,6 +280,9 @@ function updatePostCode($newPostCode, $userID){
         mysqli_close($conn);
     } 
 }
+
+
+//
 function updateTelephone($newTelephone, $userID){
      include 'database.php';
     $query = "UPDATE userdetails SET telephoneNumber ='$newTelephone' WHERE userID='$userID'";
@@ -324,17 +307,7 @@ $dbName = "websecurity";
 
 $conn= mysqli_connect($dbServername, $dbUsername, $dbPassword, $dbName) or die($conn);
 }
-function updateUser(){
-    
-}
 
-function makeUserAdmin(){
-    
-}
-
-function makeAdminUser(){
-    
-}
 
 //ADMIN - For checking create booking input and execute if correct
 function checkCreateBooking($tickets, $chosenUser, $chosenDate, $chosenAttraction){
@@ -367,12 +340,13 @@ function checkCreateBooking($tickets, $chosenUser, $chosenDate, $chosenAttractio
     }}
     
 
+
+//
 function verifyUser($user){
     $query = "SELECT * FROM userdetails WHERE email='$user'";
     $result = mysqli_query($conn, $query);
-    
-    
 }
+
 function insertUserBookingIntoDB(){
     include 'database.php';
     global $chosenUser;
@@ -389,85 +363,6 @@ function insertUserBookingIntoDB(){
 }
     
 
-function createUserNewBookingForm(){
-    include 'database.php';
-    echo '<form name="newBookform" id="form1"><table id="table1"><tr>';
-    getCurrentTime();
-    $today = date('Y-m-d');
-    echo '<br><br><h1>Create a new booking.</h1>';
-                echo '<br>';
-                echo '<select name="attractionName" id="openinghours">';
-                echo '<option value="">Select Attraction</option>';
-               showAllAttractions();
-                echo '</select><br><br>';
-                echo '<select name="numberOfAdultTickets" id="openinghours">';
-                echo '<option value="">Select Number of Adults</option>';
-                echo '<option value="1">1 Adult</option>';
-                echo '<option value="2">2 Adults</option>';
-                echo '<option value="3">3 Adults</option>';
-                echo '<option value="4">4 Adults</option>';
-                echo '<option value="5">5 Adults</option>';
-                echo '<option value="6">6 Adults</option>';
-                echo '<option value="7">7 Adults</option>';
-                echo '<option value="8">8 Adults</option>';
-                echo '</select><br><br>';
-                echo '<select name="numberOfKidsTickets" id="openinghours">';
-                echo '<option value="">Select number of Kids</option>';
-                echo '<option value="1">1 Kid</option>';
-                echo '<option value="2">2 Kids</option>';
-                echo '<option value="3">3 Kids</option>';
-                echo '<option value="4">4 Kids</option>';
-                echo '<option value="5">5 Kids</option>';
-                echo '<option value="6">6 Kids</option>';
-                echo '<option value="7">7 Kids</option>';
-                echo '<option value="8">8 Kids</option>';
-                echo '</select><br><br>';
-                echo '<input type="date" name="bookingDate"  id="openinghours" min="'.$today.'">';  
-                echo '<br><br>';
-                echo '<select name="times" id="openinghours">';
-                echo '<option value="">Select Time</option>';
-                showAllTimes();
-                echo '</select><br><br>';
-                echo '<button type="submit" name="finishBooking" >Finish Booking</button>';
-                echo '</tr></table><br></form>';
-                }
-
-//ADMIN - Create booking form using echo
-function createAdminBookingsForm(){ 
-    include 'database.php';
-   echo '<form name="newBookform" id="form1" action="adminDashboards.php" method="POST"><table id="table1"><tr>';
-                echo 'The time is: ';
-                 $currentTime = getCurrentTime();
-                echo $currentTime;
-                echo '<br>';
-                echo '<h1>Create a new booking.</h1><br>';
-                echo '<input type="text" name="userName" placeholder="Type Email Address">';
-                echo ' Or ';
-                echo '<button type="submit" name="showAllUsers">Display Users</button>';
-                echo '<br><br>';
-                echo '<select name="attractionName" id="openinghours">';
-                echo '<option value="">Select Attraction</option>';
-                showAllAttractions();
-                echo '</select><br><br>';
-                echo '<input type="date" name="bookingDate"  id="openinghours"><br><br>'; 
-                echo '<select name="times" id="openinghours">';
-                echo '<option value="">Select Time</option>';
-                showAllTimes();
-                echo '</select><br><br>';
-                echo '<select name="numberOfAdultTickets" id="openinghours">';
-                echo '<option value="">Select Number of Adults</option><option value="1">1 Adult</option><option value="2">2 Adults</option><option value="3">3 Adults</option><option value="4">4 Adults</option><option value="5">5 Adults</option><option value="6">6 Adults</option><option value="7">7 Adults</option><option value="8">8 Adults</option>';
-                echo '</select><br><br>';
-                echo '<select name="numberOfKidsTickets" id="openinghours">';
-                echo '<option value="">Select number of Kids</option><option value="1">1 Kid</option><option value="2">2 Kids</option><option value="3">3 Kids</option><option value="4">4 Kids</option><option value="5">5 Kids</option><option value="6">6 Kids</option><option value="7">7 Kids</option><option value="8">8 Kids</option></select><br><br>';
-                echo '<button type="submit" name="finishBooking">Finish Booking</button>';
-                echo '</tr></table></form>';
-    
-}
-
-function showNumberOfTickets(){
-    global $conn;
-    
-}
 
 //ADMIN - Function for showing all users 
 function showAllUsers(){
@@ -500,6 +395,8 @@ function showAllUsers(){
         //close database connection
     mysqli_close($conn);}
 
+
+
 //ADMIN - Function for displaying all ticket bookings
 function displayAllTickets(){
    include 'database.php';
@@ -529,6 +426,8 @@ function displayAllTickets(){
             } 
     mysqli_close($conn);
 }
+
+
 //USER - Display all current bookings
 function displayTickets(){
      include 'database.php';
@@ -567,6 +466,8 @@ function displayTickets(){
                 mysqli_close($conn);
      } else {echo "<tr>No Results</tr>";}}
 
+
+
 //ADMIN - Delete booking function
 function deleteBooking($bookingID){
     include 'database.php';
@@ -575,6 +476,8 @@ function deleteBooking($bookingID){
     mysqli_close($conn);
     echo "<p>Booking Deleted Successfully.</p>";
 }
+
+
 
 //ADMIN - Update booking function --------- !!!!!!!!!!!!!!!
 function updateBooking($bookingID){
@@ -603,6 +506,8 @@ function updateBooking($bookingID){
                 showAllTimes();
                 echo '</select></th><th><button type="submit" name="updateBook" value="'.$ticketID.'">Update Booking</button></th></tr></table></form>';
             }
+
+
 
 function deleteUser($userID){
     include 'database.php';
@@ -645,93 +550,7 @@ function deleteUser($userID){
 }
 
 
-//USER - 
-function displayDatePicker(){
-    echo '<input type="date" name="bday" min="2000-01-02"><br><br>';
-}
 
-
-//Any user
-function displaySearchResults($search){
-    include 'database.php';
-    //Check if only letters
-    if(!preg_match("/^[a-zA-z ]*$/", $search)){
-        echo "<tr>Letters only !!</tr>";
-        exit();}
-    //Prepare query 
-    $query = "SELECT * FROM attractionss WHERE attractionName LIKE CONCAT('%',?,'%')";
-    if($stmt = $conn->prepare($query)){
-        //Bind parameters and execute
-        $stmt->bind_param("s", $search);
-        $stmt->execute();
-        //Store retrieved result
-        $result = $stmt->get_result();
-        //Store number of rows retrieved
-        $num_of_rows = $result->num_rows;
-        if($num_of_rows > 0){
-        echo  '<tr><th><h1>Attraction Name</h1></th>
-                <th><h1>Attraction Description</h1></th>
-                <th>Location</th>
-                <th>Price</th>
-                <th></th>';
-        while ($row = $result->fetch_assoc()) {
-             echo '<tr> 
-                  <td>'.$row["attractionName"].'</td> 
-                  <td>'.$row['attractionDesc'].'</td> 
-                  <td>'.$row['locationN'].'</td> 
-                  <td>'.$row['price'].'</td> 
-                  <td><input type="submit" name="submit" value="Book Now"></td>
-                  </tr>';}
-          echo '</th></tr></table></form> </div>';
-        } else{
-             echo "<tr>No data found...</tr>";
-        }
-        //Free results
-        $stmt->free_result();
-   //Close statement
-   $stmt->close();
-    } else{
-        echo "<tr>Other error..</tr>";
-    }
-    //Close connection
-    $conn->close();
-    
-}
-
-    
-    /* 
-    
-    if($stmt->execute()){
-        $stmt->store_result();
-        $rowNo = $stmt->num_rows;
-        if($rowNo > 0){
-            $stmt->bind_result();
-
-        while($row = $result->fetch_assoc()){
-            echo '<tr> 
-                  <td>'.$row["attractionName"].'</td> 
-                  <td>'.$row['attractionDesc'].'</td> 
-                  <td>'.$row['locationN'].'</td> 
-                  <td>'.$row['price'].'</td> 
-                  
-                  <td><input type="submit" name="submit" value="">Book Now</td>
-                  </tr>';
-            
-        }
-        echo '</th>
-                    </tr></table></form> </div>';}
-        else{
-             echo "<tr>No data found...</tr>";
-        }}
-         
-    else {
-    echo "<tr>Something is wrong...</tr>";
-   
-}}
-
-    
-    
-    */
 
 
 function showUsersInSelect(){
@@ -781,21 +600,8 @@ function wrongUser() {
 }
 
 
-function cleanmsg($msg){
-// you clean code here
-    return $msg;
-}
-
- function alertBackToReg($msg,$timeout=1,$url="registerPage.php"){
-    echo "<script>(function(){alert('$msg');})();</script>";
-    echo "<meta http-equiv='refresh' content='$timeout;$url' />";
-}
 
 
-function alertBackToIndex($msg,$timeout=1,$url="index.php"){
-    echo "<script>(function(){alert('$msg');})();</script>";
-    echo "<meta http-equiv='refresh' content='$timeout;$url' />";
-}
 
 function logOut(){
     session_start();

@@ -129,7 +129,7 @@ if (!isLoggedIn()) {
          <div class="card-header bg-dark text-white">
                    <h2>Posts </h2>
          </div>
-      <div class="card-body">
+          <div class="card-body">
      
         <div class="row" style="margin-top: 15px">
         <div class="col-md-12">

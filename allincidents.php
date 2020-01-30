@@ -136,28 +136,13 @@ if (!isLoggedIn()) {
                 
                 
                 ?>
-            
- 
-
-       
-      
-       
-            
-
                
                 </div>
             </div>
         </div>
-     </div>
-     
-       
-         
-             
+     </div>      
 </div>
-
-
-	
-	<div style="margin-top:500px;"></div>
+	<div style="margin-top:200px;"></div>
 
 <?php include("footer.php");?>
 
@@ -190,87 +175,6 @@ for (i = 0; i < dropdown.length; i++) {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
 
-<script>//Script that retrieves 
-    $(document).ready(function(){
-            //Set trigger and container var
-        var trigger = $('.dropdown .dropdown-menu .dropdown-item'),
-        container = $('#dashcontent');
-    
-            //Trigger when click
-        trigger.on('click', function(){
-            //set variable to be reused, set target from data attribute
-             var $this = $(this),
-              target = $this.data('target');
-            //load target page into container
-            container.load('dashboardContent/' + target + '.php');
-            
-            //Stop link behaviour
-            return false;
-        });
-     }); 
-    
-    </script>
-
-<script>//Script that retrieves content from sidebar menu
-    $(document).ready(function(){
-            //Set trigger and container var
-        var trigger = $('#mySidebar .sidebarItem'),
-        container = $('#dashcontent');
-    
-            //Trigger when click
-        trigger.on('click', function(){
-            //set variable to be reused, set target from data attribute
-          var $this = $(this),
-              target = $this.data('target');
-            //load target page into container
-            container.load('dashboardContent/' + target + '.php');
-            
-            //Stop link behaviour
-            return false;
-        });
-     }); 
-    
-    </script>
-    
-    <script>//Script that retrieves content from sidebar menu
-    $(document).ready(function(){
-            //Set trigger and container var
-        var trigger = $('.card .card-header .rightSideContent'),
-        container = $('#dashcontent');
-    
-            //Trigger when click
-        trigger.on('click', function(){
-            //set variable to be reused, set target from data attribute
-          var $this = $(this),
-              target = $this.data('target');
-            //load target page into container
-            container.load('dashboardContent/' + target + '.php');
-            
-            //Stop link behaviour
-            return false;
-        });
-     }); 
-    </script>
-    
-    <script>//Script that retrieves posts
-    $(document).ready(function(){
-            //Set trigger and container var
-        var trigger = $(''),
-        container = $('#dashcontent');
-    
-            //Trigger when click
-        trigger.on('click', function(){
-            //set variable to be reused, set target from data attribute
-          var $this = $(this),
-              target = $this.data('target');
-            //load target page into container
-            container.load('dashboardContent/' + target + '.php');
-            
-            //Stop link behaviour
-            return false;
-        });
-     }); 
-    </script>
 
     
     

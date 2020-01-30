@@ -15,7 +15,7 @@ if (!isLoggedIn()) {
    <?php include("header.php");?>
     <?php include("troubleshootingbar.php");?>
     <?php  ?>
-<body id="home" data-spy="scroll" data-target="#main-nav" class="main-body" background= "img/Background-website-01.jpg">
+
 	<!--- Dashboard -->
            
 <div class="row">
@@ -124,10 +124,11 @@ if (!isLoggedIn()) {
                                             $content=substr($content, 0, 250) . "...";
                                         }
                                         echo htmlentities($content); ?> </p>
-                            </div></div> 
+                                </div>
+                            </div> 
                            </div>
                         </div>
-                    </div>
+                    
                     
                         
              <?php      
@@ -145,7 +146,7 @@ if (!isLoggedIn()) {
        
             
 
-               
+                   </div>
                 </div>
             </div>
         </div>
@@ -154,7 +155,7 @@ if (!isLoggedIn()) {
        
          
              
-</div>
+
 
 
 	
