@@ -3,7 +3,7 @@
 include './includes/functions.php';
 if (!isLoggedIn()) {
     alertBackToMainPage();
-
+}
 
 ?>
 
@@ -11,9 +11,9 @@ if (!isLoggedIn()) {
         <?php include("troubleshootingbar.php");?>  
 
 <!-- Body Starts -->
-<body id="home" data-spy="scroll" data-target="#main-nav" class="main-body" background= "img/Background-website-01.jpg">
+
     <div class="row" >
-        <div class="col col-lg-7 offset-lg-2 col-md-11 offset-md-1 col-sm-12 col-xs-12" style="margin-top:30px;" id="content">
+        <div class="col col-lg-8 offset-lg-2 col-md-10 offset-md-1 col-sm-12 col-xs-12" style="margin-top:30px;" id="content">
               
           <!-- Card Start -->   
           <div class="card" id="dashcontent" >
@@ -80,8 +80,8 @@ if (!isLoggedIn()) {
                         </div>  <!-- Post content row ends -->
                         <br>
              <?php 
-                //
-              
+                
+                        //
                 if(isset($_POST["submitPost"])){
                     
                     $title = mysqli_real_escape_string($conn, $_POST["Title"]);
@@ -138,48 +138,7 @@ if (!isLoggedIn()) {
         </div><!-- Card body end -->
      </div><!-- Col7 offset from dashboard container end -->
             
-    <div class="col col-lg-3 col-md-11 offset-md-1 col-xs-12 ml-auto" style="margin-top:30px; text-align: left;">
-          <div class="row">
-              <div class="col-lg-12 col-md-6 col-sm-12 col-xs-12"  style="padding:10px;">
-                 <div class="card">
-                <div class="card-header bg-dark">
-                    <a href="allNews.php" class="rightSideContent text-light"><h3>News Feed</h3></a> 
-                    </div>
-            <div class="card">   
-            <div class="card-body bg-light">
-            <div class="row">  
-            <div class="col col-md-12"> 
-             <h4><a href="#">Charity event - Hosting Clothing Sales</a></h4>
-            <h6>BY: <a href="#">Username222 </a>ON: 10.12.2019</h6>
-               <p>Welcome to my event, I am looking forward to have your support in etc etcelcome to my event, I am looking forward to have your support i....</p>
-            </div></div></div>
-              </div>
-            <div class="card">   
-            <div class="card-body bg-light">
-            <div class="row">  
-            <div class="col col-md-12"> 
-             <h4><a href="#">Charity event - Hosting Clothing Sales</a></h4>
-            <h6>BY: <a href="#">Username222 </a>ON: 10.12.2019</h6>
-               <p>Welcome to my event, I am looking forward to have your support in etc etcelcome to my event, I am looking forward to have your support in ...</p>
-            </div></div></div>
-              </div>
 
-                  </div>
-              </div>
-              <div class="col-lg-12 col-md-6 col-sm-12 col-xs-12" style="padding:10px;">
-                 <div class="card">
-                      <div class="card-header bg-dark">
-                <a href="#" class="rightSideContent text-light" data-target="incidents"><h3>Incidents</h3></a> 
-                       </div>
-                      <div class="card-body bg-light">
-                            <h4>This is a post name retrieved from database.</h4>
-                           <p>Content </p> 
-                            <p> Username</p>
-                    </div>
-                </div>
-              </div>
-          </div>
-        </div> <!-- Col on the right end -->
     </div><br><br><br><br>
          <!-- First row ends -->
         

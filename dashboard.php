@@ -7,7 +7,7 @@ if (!isLoggedIn()) {
     <?php include("troubleshootingbar.php");?>
     
     
-<body id="home" data-spy="scroll" data-target="#main-nav" class="main-body" background= "img/Background-website-01.jpg">
+
    <!--- Top Navigation Bar -->
 
     <?php ?>
