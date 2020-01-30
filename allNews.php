@@ -103,14 +103,17 @@ if (!isLoggedIn()) {
                                 </div>
                                 <div class="col col-md-8 col-sm-12 col-xs-12">
                                 <div class="row">
-                                   <div class="col-md-4 col-sm-12 col-xs-12">
-                                      <h4 class="card-title"><a  href="showPost.php?id=<?php echo $postID;?>"><?php echo htmlentities($title); ?></a></h4>
+                                   <div class="col-md-12 col-sm-12 col-xs-12">
+                                      <h4 class="card-title"><a  href="showPost.php?id=<?php echo $postID;?>"><?php echo htmlentities($title); ?></a></h4><hr>
+                                </div> </div>
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-12 col-xs-12 mr-auto">
                                        <small class="text-muted">By: <a href="#"> <?php echo $name; ?> </a></small> 
                                     </div>
                                     <div class="col-md-4 col-sm-12 col-xs-12 mr-auto">
                                      <small class="text-muted">Posted: <?php echo $date; ?> </small> 
-                                   </div>        
-                                   <div class="col-md-4 col-sm-12 col-xs-12">
+                                    </div>        
+                                    <div class="col-md-4 col-sm-12 col-xs-12">
                                        <small class="text-muted">Category: <?php echo htmlentities($cat); ?> </small> 
                                     </div>
                                 </div>
@@ -121,7 +124,7 @@ if (!isLoggedIn()) {
                                             $content=substr($content, 0, 250) . "...";
                                         }
                                         echo htmlentities($content); ?> </p>
-                                </div> 
+                            </div></div> 
                            </div>
                         </div>
                     </div>
