@@ -34,7 +34,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav ml-auto">
-       
+       <li><a class="btn btn-dark m-2" href="adminDashboard.php">Admin</a></li>
         <li><a class="btn btn-dark m-2" href="dashboard.php">Dashboard</a></li>
           <li><a class="btn btn-dark m-2" href="accdetails.php" >Account</a></li>
           <li><form action="dashboard.php" method="POST">

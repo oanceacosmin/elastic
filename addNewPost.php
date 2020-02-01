@@ -93,7 +93,7 @@ if (!isLoggedIn()) {
                     $tempName = $_FILES["image"]["tmp_name"]; 
                     $post = mysqli_real_escape_string($conn, $_POST["Post"]);
                     //Create current date and store in specified format     
-
+                    $approved = "No";
                     
                     $msg = "Your details are stored as below";
                     //successMessage($msg);
@@ -111,7 +111,7 @@ if (!isLoggedIn()) {
                         include("./includes/database.php");
                          date_default_timezone_set("Europe/London");
                         $currentTime = date('H:i d.m.Y');
-                        $sql = "INSERT INTO newsposts(postEmail, postTitle, postDate, postCat, postDesc, postContent, image) VALUES ('$authorID', '$title' ,CURRENT_TIMESTAMP ,'$category', '$desc', '$post', '$image')";
+                        $sql = "INSERT INTO newsposts(postEmail, postTitle, postDate, postCat, postDesc, postContent, image, approved) VALUES ('$authorID', '$title' ,CURRENT_TIMESTAMP ,'$category', '$desc', '$post', '$image', '$approved')";
                         
                         
                         $location = "Uploads/";

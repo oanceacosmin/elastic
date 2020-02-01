@@ -32,13 +32,13 @@ include('includes/functions.php');
        
   
           
-          <form action="dashboard.php" method="POST">
-            <button type="submit" class="btn btn-dark m-2" name="logOut" >News</button>
+          <form action="adminDashboard.php" method="POST">
+            <button type="submit" class="btn btn-dark m-2" name="sss" >News</button>
             <a class="btn btn-dark m-2" href="accdetails.php" >HREF TO php page</a> 
             <button type="submit" class="btn btn-dark m-2" name="logOut" >Incidents</button>
             <button type="submit" class="btn btn-dark m-2" name="logOut" >Users</button>   
             <button type="submit" class="btn btn-dark m-2" name="logOut" >Contact</button>
-                  
+              
                 </form>
          
         
@@ -59,11 +59,34 @@ include('includes/functions.php');
             </div>
             <div class="card-body">
              <div class="table-responsive">
+             
             <table class="table table-striped table-hover">
-           
-                 
+            <form name="newsTable" method="POST" action="adminDashboard.php">
+            
+            <?php
+                    if(isset($_GET['approve'])){
+                        include 'database.php';
+                        $postfromurl = $_GET['approve'];
+                        $approvesql = "UPDATE newsposts SET approved = 'Yes' WHERE postID = '$postfromurl'";
+                        $result2 = mysqli_query($conn, $approvesql);
+                        mysqli_close($conn);
+                        //Check if result successful
+                        echo '<div class="alert alert-success" role="alert"> Post approved.</div><button class="btn btn-dark" onclick="history.go(-1);">Finish</button>';
+                        exit(); }
+                      if(isset($_GET['unapprove'])){
+                        $postfromurl2 = $_GET['unapprove'];
+                      include 'database.php';
+                      $unapprovesql = "UPDATE newsposts SET approved = 'No' WHERE postID = '$postfromurl2'";
+                      $result3 = mysqli_query($conn, $unapprovesql);
+                      mysqli_close($conn);
+                      echo '<div class="alert alert-warning" role="alert"> Post unapproved.</div><button class="btn btn-dark" onclick="history.go(-1);">Finish</button>';
+                      exit();
+                      }                
+                ?>
+            
+            
             <!-- Retrieve all posts from logged user-->
-           <tr> <?php 
+           <?php 
             include 'database.php';
             $email = $_SESSION["userEmail"];
             //After setting the limit of retrieved posts to 5, user must choose page or result from 6 to 10
@@ -72,41 +95,67 @@ include('includes/functions.php');
             $rescheck = mysqli_num_rows($result);    
             
             if ($rescheck == 0){
-                $alert = "You have no active posts.";
+                $alert = "There are no active posts.";
                 alertMessage($alert);
                 mysqli_close($conn);
-        //if there is one result, execute code between curly brackets
-             } else{ 
-                echo "<tr>
+        //if there is at least one result from db, show below.
+             } else {            ?> 
+               <tr>
                      <th>Author</th>
                      <th>Date</th>
                      <th>Category</th>
                      <th>Post Title</th>
                      <th></th>
                      <th></th>
-                 </tr>";
-                
-                while($row = mysqli_fetch_assoc($result)){
+                     <th></th>
+                 </tr>  
+                 
+                 
+             <?php  while($row = mysqli_fetch_assoc($result)){
+                    $postId =  $row['postID'];
+                    $approved = $row['approved'];
                     $name =  $row['postEmail'];
                     $date =  $row['postDate'];
                     $cat =  $row['postCat'];
                     $title =  $row['postTitle'];
-                    echo "<tr>
-                     <td>$name</td>
-                     <td>$date</td>
-                     <td>$cat</td>
-                     <td>$title</td>
-                     <td><button class='btn btn-primary btn-block'>Edit Post</button></td>
+                    //Remove html code from echo, set a max of char for each ?> 
+                  <tr>
+                     <td><?php echo $name;?></td>
+                     <td><?php echo $date;?></td>
+                     <td><?php echo $cat;?></td>
+                     <td><?php echo $title;?></td>
+                     <?php  
+                  if(strpos($approved, 'No') !== false){ 
+                      
+                        ?> <td><a href="adminDashboard.php?approve=<?php echo $postId;?>" class="btn btn-warning btn-block" name="approve"><?php echo "Approve";?></a></td>   <?php 
+
+                        ?> <?php   
+               
+                   } elseif(strpos($approved, 'Yes') !== false){
+                      include 'database.php';
+                      ?> <td><a href="adminDashboard.php?unapprove=<?php echo $postId;?>" class="btn btn-success btn-block" name="unapprove" ><?php echo "Undo";?></a>
+                      
+                      
+                      
+                     </td>
+                       <?php
+} else {
+                      }
+                      
+                      ?>
+                     
+                     <td><button class='btn btn-primary btn-block' >Edit Post</button></td>
                      <td><button class='btn btn-danger btn-block'>Delete Post</button></td>
                      
-                 </tr>";
+                 </tr> <?php
                     
                 }
             } 
                     
-               ?> </tr>
-
+               ?> 
+                </form>
              </table>
+             
              </div>
             </div>
         </div> <!-- Edit profile Card End -->
@@ -123,13 +172,13 @@ include('includes/functions.php');
            
                  
             <!-- Retrieve all incidents posts from logged user-->
-           <tr> <?php 
+           <?php 
             include('database.php');
             $email = $_SESSION["userEmail"];
             $sql = "SELECT * FROM incidposts ORDER BY incDate DESC LIMIT 8";
             $result = mysqli_query($conn, $sql);
               
-            
+            //Another if statement to check if post is approved!!
             if (!mysqli_num_rows($result)){
                 $alert = "You have no active posts.";
                 alertMessage($alert);
@@ -137,12 +186,12 @@ include('includes/functions.php');
         //if there is one result, execute code between curly brackets
              } else{ 
                 //Print table row and header
-                echo "<tr>
+               ?>  <tr>
                      <th>Author</th>
                      <th>Date</th>
                      <th>Category</th>
                      <th>Post Title</th>
-                     <th></th><th></th></tr>";
+                     <th></th><th></th></tr> <?php
                      
                 // Print content retrieved from database
                 while($row = mysqli_fetch_assoc($result)){
@@ -151,25 +200,26 @@ include('includes/functions.php');
                     $desc =  $row['incDesc'];
                     $title =  $row['incTitle'];
                    
+                   
                 if(strlen($title)>70){
                     $title=substr($title, 0, 70) . "...";}
                 if(strlen($desc)>70){
                     $desc=substr($desc, 0, 70) . "...";}
                         
-                    echo "<tr>
-                     <td>$name</td>
-                     <td>$date</td>
-                     <td>$desc</td>
-                     <td>$title</td>
+                ?>  <tr>
+                     <td><?php echo $name;?></td>
+                     <td><?php echo $date;?></td>
+                     <td><?php echo $desc;?></td>
+                     <td><?php echo $title;?></td>
+                     <?php 
+                        
+                ?>
+                     
                      <td><button class='btn btn-primary btn-block'>Edit Post</button></td>
                      <td><button class='btn btn-danger btn-block'>Delete Post</button></td>
                      
-                 </tr>";
-                    
-                }
-            } 
-                    
-               ?> </tr>
+                 </tr> <?php        }
+            } ?> 
 
              </table>
             </div>
@@ -181,7 +231,7 @@ include('includes/functions.php');
                 </div> <!--- End dashboard content card-->
             </div> 
 
-    <?php include("sidebar.php");?>
+    <?php //include("sidebar.php");?>
 
     </div>
 

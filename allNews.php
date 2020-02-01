@@ -38,6 +38,7 @@ if (!isLoggedIn()) {
                 </div>
                 <div class="col col-md-3 mr-auto">
                       <a href="addNewPost.php" class="btn btn-primary btn-block">
+                      <a href="addNewPost.php" class="btn btn-primary btn-block">
                         <i class="fas fa-plus"></i> Add New Post
                       </a>
                 </div>
