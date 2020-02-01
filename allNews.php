@@ -26,18 +26,18 @@ if (!isLoggedIn()) {
                 <div class="col col-md-9">
                        <h2><?php 
                            
-                           if(isset($_GET['searchButton'])){
+                    if(isset($_GET['searchButton'])){
                         $search = $_GET['Search'];
-                        $sql = "SELECT * FROM newsposts WHERE postTitle LIKE '%$search%' or postDesc LIKE '%$search%' ORDER BY postDate desc";
+                        $sql = "SELECT * FROM newsposts WHERE postTitle LIKE '%$search%' OR postDesc LIKE '%$search%' ORDER BY postDate desc";
                                $msc = microtime(true);
                         echo "These are the results for: " . $search;
                     } else {
-                        $sql = "SELECT * FROM newsposts ORDER BY postDate DESC LIMIT 8";
+                        $approved = "Yes";
+                        $sql = "SELECT * FROM newsposts WHERE approved LIKE '%$approved%' ORDER BY postDate DESC LIMIT 8";
                         echo "Latest News:";
                     } ?></h2>
                 </div>
                 <div class="col col-md-3 mr-auto">
-                      <a href="addNewPost.php" class="btn btn-primary btn-block">
                       <a href="addNewPost.php" class="btn btn-primary btn-block">
                         <i class="fas fa-plus"></i> Add New Post
                       </a>

@@ -26,30 +26,42 @@ include('includes/functions.php');
                      <!--- Dashboard Title-->
 
                   
-    <?php  $websiteURL = "http://" . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];                      ?>      
+         
 
     <?php include('adminbar.php');?>
                   
                   
                   
                    </div> <!--- End card header -->
-    <div class="row" style="margin-top: 15px">
-        <div class="col-md-12">
+   
+        
+            
+
+        
+             
+      
+      
+       <div class="row" style="margin-top: 15px">
+         <!-- Column end -->
+
+        <div class="col col-md-12"> <!-- Incident post start - add modal for editing posts? -->
           <div class="card">
             <div class="card-header">
-              <h4>News Posts</h4>
+              <h4>Incidents Posts</h4>
+                      
+                
             </div>
             <div class="card-body">
-             <div class="table-responsive">
-             
             <table class="table table-striped table-hover">
-            <form name="newsTable" method="POST" action="adminDashboard.php">
+               <form name="incTable" method="GET" action="adminincidents.php">
+                 
+            <!-- Retrieve all incidents posts from logged user-->
             
-            <?php
+                        <?php
                     if(isset($_GET['approve'])){
                         include 'database.php';
-                        $postfromurl = $_GET['approve'];
-                        $approvesql = "UPDATE newsposts SET approved = 'Yes' WHERE postID = '$postfromurl'";
+                        $idfromurl = $_GET['approve'];
+                        $approvesql = "UPDATE incidposts SET approved = 'Yes' WHERE incID = '$idfromurl'";
                         $result2 = mysqli_query($conn, $approvesql);
                         mysqli_close($conn);
                         //Check if result successful
@@ -57,33 +69,30 @@ include('includes/functions.php');
                         <button class="btn btn-dark"  onclick="history.go(-1);">Finish</button>';
                         exit(); }
                       if(isset($_GET['unapprove'])){
-                        $postfromurl2 = $_GET['unapprove'];
+                        $idfromurl2 = $_GET['unapprove'];
                       include 'database.php';
-                      $unapprovesql = "UPDATE newsposts SET approved = 'No' WHERE postID = '$postfromurl2'";
+                      $unapprovesql = "UPDATE incidposts SET approved = 'No' WHERE incID = '$idfromurl2'";
                       $result3 = mysqli_query($conn, $unapprovesql);
                       mysqli_close($conn);
                       echo '<div class="alert alert-warning" role="alert"> Post unapproved.</div><button class="btn btn-dark" onclick="history.go(-1);">Finish</button>';
                       exit();
                       }                
                 ?>
-            
-            
-            <!-- Retrieve all posts from logged user-->
            <?php 
-            include 'database.php';
+            include('database.php');
             $email = $_SESSION["userEmail"];
-            //After setting the limit of retrieved posts to 5, user must choose page or result from 6 to 10
-            $sql = "SELECT * FROM newsposts ORDER BY postDate DESC LIMIT 15"; 
+            $sql = "SELECT * FROM incidposts ORDER BY incDate DESC LIMIT 8";
             $result = mysqli_query($conn, $sql);
-            $rescheck = mysqli_num_rows($result);    
-            
-            if ($rescheck == 0){
-                $alert = "There are no active posts.";
+              
+            //Another if statement to check if post is approved!!
+            if (!mysqli_num_rows($result)){
+                $alert = "You have no active posts.";
                 alertMessage($alert);
                 mysqli_close($conn);
-        //if there is at least one result from db, show below.
-             } else {            ?> 
-               <tr>
+        //if there is one result, execute code between curly brackets
+             } else{ 
+                //Print table row and header
+               ?>  <tr>
                      <th>Author</th>
                      <th>Date</th>
                      <th>Category</th>
@@ -91,59 +100,58 @@ include('includes/functions.php');
                      <th></th>
                      <th></th>
                      <th></th>
-                 </tr>  
-                 
-                 
-             <?php  while($row = mysqli_fetch_assoc($result)){
-                    $postId =  $row['postID'];
-                    $approved = $row['approved'];
-                    $name =  $row['postEmail'];
-                    $date =  $row['postDate'];
-                    $cat =  $row['postCat'];
-                    $title =  $row['postTitle'];
-                    //Remove html code from echo, set a max of char for each ?> 
-                  <tr>
+                     </tr> <?php
+                     
+                // Print content retrieved from database
+                while($row = mysqli_fetch_assoc($result)){
+                    $indId = $row['incID'];
+                    $name =  $row['incEmail'];
+                    $date =  $row['incDate'];
+                    $desc =  $row['incDesc'];
+                    $title =  $row['incTitle'];
+                   $approved = $row['approved'];
+                   
+                if(strlen($title)>70){
+                    $title=substr($title, 0, 70) . "...";}
+                if(strlen($desc)>70){
+                    $desc=substr($desc, 0, 70) . "...";}
+                        
+                ?>  <tr>
                      <td><?php echo $name;?></td>
                      <td><?php echo $date;?></td>
-                     <td><?php echo $cat;?></td>
+                     <td><?php echo $desc;?></td>
                      <td><?php echo $title;?></td>
-                     <?php  
-                  if(strpos($approved, 'No') !== false or $approved == null){ 
+                     <?php 
+                    if(strpos($approved, 'No') !== false or $approved == null){ 
                       
-                        ?> <td><a href="adminDashboard.php?approve=<?php echo $postId;?>" class="btn btn-warning btn-block" name="approve"><?php echo "Approve";?></a></td>   <?php 
+                        ?> <td><a href="adminincidents.php?approve=<?php echo $indId;?>" class="btn btn-warning btn-block" name="approve"><?php echo "Approve";?></a></td>   <?php 
 
-                        ?> <?php   
                
                    } elseif(strpos($approved, 'Yes') !== false){
                       include 'database.php';
-                      ?> <td><a href="adminDashboard.php?unapprove=<?php echo $postId;?>" class="btn btn-success btn-block" name="unapprove" ><?php echo "Undo";?></a>  
+                      ?> <td><a href="adminincidents.php?unapprove=<?php echo $indId;?>" class="btn btn-success btn-block" name="unapprove"><?php echo "Undo";?></a>
+                      
                      </td>
                        <?php
                     } else {
                       }
-                      
-                      ?>
+                ?>
                      
-                     <td><button class='btn btn-primary btn-block' >Edit Post</button></td>
+                     <td><button class='btn btn-primary btn-block'>Edit Post</button></td>
                      <td><button class='btn btn-danger btn-block'>Delete Post</button></td>
                      
-                 </tr> <?php
-                    
-                }
-            } 
-                    
-               ?> 
-                </form>
-             </table>
-             
-             </div>
-            </div>
-        </div> <!-- Edit profile Card End -->
-        <br>
-        </div> <!-- Column end -->
-       
+                 </tr> <?php        }
+            } ?> 
+                    </form> 
+                 </table>
+                </div>
+         
 
+        </div> <!-- Edit profile Card End -->
     </div>
+            
+    </div>
+
                 </div> <!--- End dashboard content card-->
             </div> 
 

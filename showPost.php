@@ -31,16 +31,19 @@ if (!isLoggedIn()) {
                         $search = $_GET['Search'];
                         $sql = "SELECT * FROM newsposts WHERE postTitle LIKE '%$search%' or postDesc LIKE '%$search%' ";
                     } else {
+                        $approved = "Yes";
                         $postIdFromUrl = $_GET['id'];
-                        $sql = "SELECT * FROM newsposts WHERE postID='$postIdFromUrl' ORDER BY postDate DESC LIMIT 8";
+                        $sql = "SELECT * FROM newsposts WHERE postID='$postIdFromUrl' AND approved = '$approved'";
                     }
                     
                     $result = mysqli_query($conn, $sql);
 
-                    if(mysqli_num_rows($result) == 0){
-                        $alert = "There are no active posts.";
+                    if(!$result or mysqli_num_rows($result) == 0){
+                        $alert = "Post cannot be found.";
                         alertMessage($alert);
+                        echo '<button class="btn btn-dark" onclick="history.go(-1);">Finish</button>';
                         mysqli_close($conn);
+                        exit();
                     } else{ 
 
                     
