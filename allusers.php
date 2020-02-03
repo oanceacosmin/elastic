@@ -36,35 +36,61 @@ include('includes/functions.php');
     <div class="row" style="margin-top: 15px">
         <div class="col-md-12">
           <div class="card">
+               <form name="newsTable" method="POST" action="allusers.php">
             <div class="card-header">
-              <h4>News Posts</h4>
+                 <div class="row">
+                    <div class="col col-lg-10 col-md-8 col-sm-8">
+                          <h4>All users</h4>
+                    </div>
+                    <div class="col col-lg-2 col-md-4 col-sm-4 ">
+                      <a href="allusers.php?createuser" class="btn btn-primary text-light btn-block" name="createuser">
+                        <i class="fas fa-plus"></i> Create new user
+                      </a>
+                    </div>
+                 </div>
             </div>
             <div class="card-body">
              <div class="table-responsive">
              
             <table class="table table-striped table-hover">
-            <form name="newsTable" method="POST" action="adminDashboard.php">
+                
             
-            <?php
-                    if(isset($_GET['approve'])){
+            <?php 
+                    if(isset($_GET['createuser'])){
+                        echo '<div class="alert alert-success" role="alert"> User privileges changed to admin.</div>
+                        <button class="btn btn-dark"  onclick="history.go(-1);">Finish</button>';
+                        exit();
+                    }
+                    if(isset($_GET['setadmin'])){
                         include 'database.php';
-                        $postfromurl = $_GET['approve'];
-                        $approvesql = "UPDATE newsposts SET approved = 'Yes' WHERE postID = '$postfromurl'";
-                        $result2 = mysqli_query($conn, $approvesql);
+                        $postfromurl = $_GET['setadmin'];
+                        $setsql = "UPDATE userdetails SET userType = 'admin' WHERE userID = '$postfromurl'";
+                        $result2 = mysqli_query($conn, $setsql);
                         mysqli_close($conn);
                         //Check if result successful
-                        echo '<div class="alert alert-success" role="alert"> Post approved.</div>
+                        echo '<div class="alert alert-success" role="alert"> User privileges changed to admin.</div>
                         <button class="btn btn-dark"  onclick="history.go(-1);">Finish</button>';
                         exit(); }
-                      if(isset($_GET['unapprove'])){
-                        $postfromurl2 = $_GET['unapprove'];
+                    if(isset($_GET['removeadmin'])){
+                        $postfromurl2 = $_GET['removeadmin'];
                       include 'database.php';
-                      $unapprovesql = "UPDATE newsposts SET approved = 'No' WHERE postID = '$postfromurl2'";
-                      $result3 = mysqli_query($conn, $unapprovesql);
+                      $unsetsql = "UPDATE userdetails SET userType = 'normal' WHERE userID = '$postfromurl2'";
+                      $result3 = mysqli_query($conn, $unsetsql);
+                      
+                      echo '<div class="alert alert-success" role="alert"> Admin privileges removed.</div><button class="btn btn-dark" onclick="history.go(-1);">Finish</button>';
                       mysqli_close($conn);
-                      echo '<div class="alert alert-warning" role="alert"> Post unapproved.</div><button class="btn btn-dark" onclick="history.go(-1);">Finish</button>';
                       exit();
-                      }                
+                      }
+                    if(isset($_GET['deleteuser'])){
+                        $postfromurl3 = $_GET['deleteuser'];
+                        $deletesql = "DELETE FROM userdetails WHERE userID = '$postfromurl3'";
+                        include 'database.php';
+                        $delete = mysqli_query($conn, $deletesql);
+                        echo '<div class="alert alert-success" role="alert"> User successfully deleted.</div><button class="btn btn-dark" onclick="history.go(-1);">Finish</button>';
+                      mysqli_close($conn);
+                      exit();
+                        
+                    }
                 ?>
             
             
@@ -73,9 +99,9 @@ include('includes/functions.php');
             include 'database.php';
             $email = $_SESSION["userEmail"];
             //After setting the limit of retrieved posts to 5, user must choose page or result from 6 to 10
-            $sql = "SELECT * FROM newsposts ORDER BY postDate DESC LIMIT 15"; 
+            $sql = "SELECT * FROM userdetails LIMIT 15"; 
             $result = mysqli_query($conn, $sql);
-            $rescheck = mysqli_num_rows($result);    
+            $rescheck = mysqli_num_rows($result);   
             
             if ($rescheck == 0){
                 $alert = "There are no active posts.";
@@ -84,48 +110,54 @@ include('includes/functions.php');
         //if there is at least one result from db, show below.
              } else {            ?> 
                <tr>
-                     <th>Author</th>
-                     <th>Date</th>
-                     <th>Category</th>
-                     <th>Post Title</th>
-                     <th></th>
-                     <th></th>
-                     <th></th>
-                 </tr>  
+                     <th>Name</th>
+                     <th>Email</th>
+                    
+                     <th>Postal code</th>
+                     <th>Telephone</th>
+                     <th>Department</th>
+                     <th>User type</th>
+                    <th></th><th></th>
+                </tr>
                  
                  
              <?php  while($row = mysqli_fetch_assoc($result)){
-                    $postId =  $row['postID'];
-                    $approved = $row['approved'];
-                    $name =  $row['postEmail'];
-                    $date =  $row['postDate'];
-                    $cat =  $row['postCat'];
-                    $title =  $row['postTitle'];
+                    $userId =  $row['userID'];
+                    $name = $row['fullName'];
+                    $email =  $row['email'];
+                    $homeaddress =  $row['homeAddress'];
+                    $postcode =  $row['postCode'];
+                    $telephone =  $row['telephone'];
+                    $department =  $row['department'];
+                    $usertype =  $row['userType'];
                     //Remove html code from echo, set a max of char for each ?> 
                   <tr>
                      <td><?php echo $name;?></td>
-                     <td><?php echo $date;?></td>
-                     <td><?php echo $cat;?></td>
-                     <td><?php echo $title;?></td>
+                     <td><?php echo $email;?></td>
+                     <td><?php echo $postcode;?></td>
+                     <td><?php echo $telephone;?></td>
+                     <td><?php echo $department;?></td>
+                     <td><?php echo $usertype;?></td>
                      <?php  
-                  if(strpos($approved, 'No') !== false or $approved == null){ 
+                  if(strpos($usertype, 'admin') !== false ){ 
                       
-                        ?> <td><a href="adminDashboard.php?approve=<?php echo $postId;?>" class="btn btn-warning btn-block" name="approve"><?php echo "Approve";?></a></td>   <?php 
+                        ?> <td><a href="allusers.php?removeadmin=<?php echo $userId;?>" class="btn btn-warning btn-block" name="removeadmin"><?php echo "Remove admin";?></a></td>   <?php 
 
                         ?> <?php   
                
-                   } elseif(strpos($approved, 'Yes') !== false){
+                   } elseif(strpos($usertype, 'normal') !== false){
                       include 'database.php';
-                      ?> <td><a href="adminDashboard.php?unapprove=<?php echo $postId;?>" class="btn btn-success btn-block" name="unapprove" ><?php echo "Undo";?></a>  
+                      ?> <td><a href="allusers.php?setadmin=<?php echo $userId;?>" class="btn btn-success btn-block" name="setadmin" ><?php echo "Make admin";?></a>  
                      </td>
                        <?php
                     } else {
+                      
                       }
                       
                       ?>
                      
-                     <td><a href="showPost.php?id=<?php echo $postId;?>" class="btn btn-primary btn-block"><?php echo "View Post";?></a></td>
-                     <td><button class='btn btn-danger btn-block'>Delete Post</button></td>
+                     
+                     <td><a href="allusers.php?deleteuser=<?php echo $userId;?>" class="btn btn-danger btn-block" name="deleteuser" ><?php echo "Delete User";?></a></td>
                      
                  </tr> <?php
                     
@@ -133,11 +165,12 @@ include('includes/functions.php');
             } 
                     
                ?> 
-                </form>
+                
              </table>
              
              </div>
             </div>
+            </form>
         </div> <!-- Edit profile Card End -->
         <br>
         </div> <!-- Column end -->

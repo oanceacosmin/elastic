@@ -28,7 +28,8 @@ if (!isLoggedIn()) {
                            
                     if(isset($_GET['searchButton'])){
                         $search = $_GET['Search'];
-                        $sql = "SELECT * FROM newsposts WHERE postTitle LIKE '%$search%' OR postDesc LIKE '%$search%' ORDER BY postDate desc";
+                        $approved = "Yes";
+                        $sql = "SELECT * FROM newsposts WHERE (postTitle LIKE '%$search%' OR postDesc LIKE '%$search%') AND (approved = '$approved') ORDER BY postDate desc";
                                $msc = microtime(true);
                         echo "These are the results for: " . $search;
                     } else {
@@ -64,7 +65,7 @@ if (!isLoggedIn()) {
                     $time_end = microtime_float();
                     $time = $time_end - $time_start;
          
-                    
+//Must create another while loop to show results to incidents
                 if(mysqli_num_rows($result) == 0){
                     $alert = "There are no active posts.";
                     alertMessage($alert);

@@ -1,6 +1,6 @@
 
 
-<?php session_start();
+<?php session_start(); //Start session and check if user is logged in
 include 'includes/functions.php';
 if (!isLoggedIn()) {
     alertBackToMainPage();
@@ -31,6 +31,7 @@ if (!isLoggedIn()) {
                         $search = $_GET['Search'];
                         $sql = "SELECT * FROM newsposts WHERE postTitle LIKE '%$search%' or postDesc LIKE '%$search%' ";
                     } else {
+                        
                         $approved = "Yes";
                         $postIdFromUrl = $_GET['id'];
                         $sql = "SELECT * FROM newsposts WHERE postID='$postIdFromUrl' AND approved = '$approved'";

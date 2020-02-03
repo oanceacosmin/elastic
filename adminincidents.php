@@ -104,7 +104,7 @@ include('includes/functions.php');
                      
                 // Print content retrieved from database
                 while($row = mysqli_fetch_assoc($result)){
-                    $indId = $row['incID'];
+                    $incId = $row['incID'];
                     $name =  $row['incEmail'];
                     $date =  $row['incDate'];
                     $desc =  $row['incDesc'];
@@ -124,12 +124,12 @@ include('includes/functions.php');
                      <?php 
                     if(strpos($approved, 'No') !== false or $approved == null){ 
                       
-                        ?> <td><a href="adminincidents.php?approve=<?php echo $indId;?>" class="btn btn-warning btn-block" name="approve"><?php echo "Approve";?></a></td>   <?php 
+                        ?> <td><a href="adminincidents.php?approve=<?php echo $incId;?>" class="btn btn-warning btn-block" name="approve"><?php echo "Approve";?></a></td>   <?php 
 
                
                    } elseif(strpos($approved, 'Yes') !== false){
                       include 'database.php';
-                      ?> <td><a href="adminincidents.php?unapprove=<?php echo $indId;?>" class="btn btn-success btn-block" name="unapprove"><?php echo "Undo";?></a>
+                      ?> <td><a href="adminincidents.php?unapprove=<?php echo $incId;?>" class="btn btn-success btn-block" name="unapprove"><?php echo "Undo";?></a>
                       
                      </td>
                        <?php
@@ -137,7 +137,7 @@ include('includes/functions.php');
                       }
                 ?>
                      
-                     <td><button class='btn btn-primary btn-block'>Edit Post</button></td>
+                     <td><a href="showinc.php?unapprove=<?php echo $incId;?>" class="btn btn-primary btn-block"><?php echo "View Post";?></a></td>
                      <td><button class='btn btn-danger btn-block'>Delete Post</button></td>
                      
                  </tr> <?php        }
