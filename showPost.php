@@ -34,7 +34,12 @@ if (!isLoggedIn()) {
                         
                         $approved = "Yes";
                         $postIdFromUrl = $_GET['id'];
+                        $userType = $_SESSION['userType'];                        
+                        if($userType == 'normal'){
                         $sql = "SELECT * FROM newsposts WHERE postID='$postIdFromUrl' AND approved = '$approved'";
+                        } else{
+                         $sql = "SELECT * FROM newsposts WHERE postID='$postIdFromUrl'";        } 
+                        
                     }
                     
                     $result = mysqli_query($conn, $sql);

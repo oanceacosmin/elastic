@@ -59,19 +59,23 @@ include('includes/functions.php');
             <?php 
                    
                 
-                    if(isset($_POST['crseateUser'])){
+                    if(isset($_POST['submittt'])){
                         echo '<div class="alert alert-success" role="alert"> User privileges changed to admin.</div>
                         <button class="btn btn-dark"  onclick="history.go(-1);">Finish</button>';
                         exit();
                     }
                 
-                    if(isset($_POST['createUser'])){
+                    if(isset($_POST['submit'])){
                         include 'database.php';
                         $name = $_POST['username'];
                         $email = $_POST['email'];
                         $password = $_POST['password'];
-                        $sql = "INSERT INTO userdetails (email, password, fullName) VALUES ('$name', '$email', '$password')";
+                        $userType = "normal";
+                        $sql = "INSERT INTO userdetails (fullName, email, password, userType) VALUES ('$name', '$email', '$password', '$userType')";
                         $result = mysqli_query($conn, $sql);
+                        echo '<div class="alert alert-success" role="alert"> User created.</div>
+                        <button class="btn btn-dark"  onclick="history.go(-1);">Finish</button>';
+                        exit();
                         
                     }
                 
@@ -198,10 +202,11 @@ include('includes/functions.php');
     <?php //include("sidebar.php");?>
         
     </div>
+     <form class="form-horizontal" method="POST" action="allusers.php" id="createUserForm">
       <div class="modal fade text-dark" id="addNewUserModal"> <!-- Modal for contact us form start-->
     <div class="modal-dialog">
       <div class="modal-content">
-       <form class="form-horizontal" method="POST" action="allusers.php" id="createUserForm">
+       
         <div class="modal-header">
           <h5 class="modal-title">Create user</h5>
           <button class="close" data-dismiss="modal">
@@ -225,13 +230,13 @@ include('includes/functions.php');
           </form>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-primary btn-block" type="submit" id="createUser" name="submit" value="Create User">Submit</button>
+          <button class="btn btn-primary btn-block" type="submit" id="submit" name="submit" value="submit">Submit</button>
         </div>
-        </form>
+        
       </div>
     </div>
   </div>  
-	
+</form>
 	<div style="margin-top:200px;"></div>
 
 <?php include("footer.php");?>

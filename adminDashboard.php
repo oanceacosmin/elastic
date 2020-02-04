@@ -56,6 +56,28 @@ if (!isLoggedIn()) {
                         echo '<div class="alert alert-success" role="alert"> Post approved.</div>
                         <button class="btn btn-dark"  onclick="history.go(-1);">Finish</button>';
                         exit(); }
+                
+                //not in use
+                    if(isset($_GET['deleteposttt'])){
+                        $postfromurl3 = $_GET['deletepost'];
+                        $deletesql = "DELETE FROM newsposts WHERE postID = '$postfromurl3'";
+                        include 'database.php';
+                        $delete = mysqli_query($conn, $deletesql);
+                        echo '<div class="alert alert-success" role="alert"> Post successfully deleted.</div><button class="btn btn-dark" onclick="history.go(-1);">Finish</button>';
+                        mysqli_close($conn);
+                        exit();
+                        
+                    }    
+                    if(isset($_POST['delete'])){
+                        $value = $_POST['delete'];
+                        $deletesql = "DELETE FROM newsposts WHERE postID = '$value'";
+                        include 'database.php';
+                        $delete = mysqli_query($conn, $deletesql);
+                        echo '<div class="alert alert-success" role="alert"> Post successfully deleted.</div><button class="btn btn-dark" onclick="history.go(-1);">Finish</button>';
+                        mysqli_close($conn);
+                        exit();
+                    }
+                
                       if(isset($_GET['unapprove'])){
                         $postfromurl2 = $_GET['unapprove'];
                       include 'database.php';
@@ -64,7 +86,9 @@ if (!isLoggedIn()) {
                       mysqli_close($conn);
                       echo '<div class="alert alert-warning" role="alert"> Post unapproved.</div><button class="btn btn-dark" onclick="history.go(-1);">Finish</button>';
                       exit();
-                      }                
+                      }    
+                        
+                    
                 ?>
             
             
@@ -125,7 +149,7 @@ if (!isLoggedIn()) {
                       ?>
                      
                      <td><a href="showPost.php?id=<?php echo $postId;?>" class="btn btn-primary btn-block"><?php echo "View Post";?></a></td>
-                     <td><button class='btn btn-danger btn-block'>Delete Post</button></td>
+                     <td><button class='btn btn-danger btn-block' type="submit" name="delete" value="<?php echo $postId?>">Delete Post</button></td>
                      
                  </tr> <?php
                     

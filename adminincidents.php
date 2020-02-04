@@ -53,7 +53,7 @@ include('includes/functions.php');
             </div>
             <div class="card-body">
             <table class="table table-striped table-hover">
-               <form name="incTable" method="GET" action="adminincidents.php">
+               <form name="incTable" method="POST" action="adminincidents.php">
                  
             <!-- Retrieve all incidents posts from logged user-->
             
@@ -68,6 +68,17 @@ include('includes/functions.php');
                         echo '<div class="alert alert-success" role="alert"> Post approved.</div>
                         <button class="btn btn-dark"  onclick="history.go(-1);">Finish</button>';
                         exit(); }
+                   
+                    if(isset($_POST['delete'])){
+                        $id=$_POST['delete'];
+                        $deletesql = "DELETE FROM incidposts WHERE incID = '$id'";
+                        include 'database.php';
+                        $delete = mysqli_query($conn, $deletesql);
+                        echo '<div class="alert alert-success" role="alert"> Post successfully deleted.</div><button class="btn btn-dark" onclick="history.go(-1);">Finish</button>';
+                        mysqli_close($conn);
+                        exit();
+                        }
+                   
                       if(isset($_GET['unapprove'])){
                         $idfromurl2 = $_GET['unapprove'];
                       include 'database.php';
@@ -95,7 +106,7 @@ include('includes/functions.php');
                ?>  <tr>
                      <th>Author</th>
                      <th>Date</th>
-                     <th>Category</th>
+                     <th>Description</th>
                      <th>Post Title</th>
                      <th></th>
                      <th></th>
@@ -134,11 +145,12 @@ include('includes/functions.php');
                      </td>
                        <?php
                     } else {
+                        
                       }
                 ?>
                      
-                     <td><a href="showincident.php?id=<?php echo $incId;?>" class="btn btn-primary btn-block"><?php echo "View Post";?></a></td>
-                     <td><button class='btn btn-danger btn-block'>Delete Post</button></td>
+                     <td><a href="showincident.php?id=<?php echo $incId;?>" class="btn btn-primary btn-block">View Post</a></td>
+                     <td><button class='btn btn-danger btn-block' type="submit" name="delete" value="<?php echo $incId;?>">Delete Post</button></td>
                      
                  </tr> <?php        }
             } ?> 
