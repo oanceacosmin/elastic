@@ -10,8 +10,6 @@ if (!isLoggedIn()) {
    
 }
 ?>
-
-    
    <?php include("header.php");?>
     <?php include("troubleshootingbar.php");?>
 
@@ -31,13 +29,14 @@ if (!isLoggedIn()) {
                      
                         echo "These are the results for: " . $search;
                     } else {
-                        $sql = "SELECT * FROM incidposts ORDER BY incDate DESC LIMIT 8";
+                        $approved = "Yes";
+                        $sql = "SELECT * FROM incidposts WHERE approved LIKE '%$approved%' ORDER BY incDate DESC LIMIT 8";
                         echo "Latest Incidents:";
                     } ?></h2>
                 </div>
                 <div class="col col-md-3 mr-auto">
-                      <a href="addNewPost.php?cat=inc" class="btn btn-primary btn-block">
-                        <i class="fas fa-plus"></i> Add New Post
+                      <a href="addNewIncident.php" class="btn btn-primary btn-block">
+                        <i class="fas fa-plus"></i> Add New Incident
                       </a>
                 </div>
                
@@ -77,7 +76,7 @@ if (!isLoggedIn()) {
 ' . $time * 1000 . " Milliseconds</div>";
                     mysqli_close($conn);
                     while($row = mysqli_fetch_assoc($result)){
-                    $postID = $row['incID'];
+                    $incID = $row['incID'];
                     $name =  $row['incEmail'];
                    //$cat =  $row['incCat'];
                     $dbdate = $row['incDate'];
@@ -103,7 +102,7 @@ if (!isLoggedIn()) {
                                 <div class="col col-md-8 col-sm-12 col-xs-12">
                                    <div class="row">
                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                          <h4 class="card-title"><a  href="showIncident.php?id=<?php echo $postID;?>"><?php echo htmlentities($title); ?></a></h4>
+                                          <h4 class="card-title"><a href="showincident.php?id=<?php echo $incID;?>"><?php echo htmlentities($title); ?></a></h4>
                                         
                                         </div>
                                     </div>

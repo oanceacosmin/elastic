@@ -137,7 +137,7 @@ include('includes/functions.php');
                       }
                 ?>
                      
-                     <td><a href="showinc.php?unapprove=<?php echo $incId;?>" class="btn btn-primary btn-block"><?php echo "View Post";?></a></td>
+                     <td><a href="showincident.php?id=<?php echo $incId;?>" class="btn btn-primary btn-block"><?php echo "View Post";?></a></td>
                      <td><button class='btn btn-danger btn-block'>Delete Post</button></td>
                      
                  </tr> <?php        }

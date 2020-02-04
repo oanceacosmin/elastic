@@ -2,14 +2,14 @@
 <?php 
 session_start();
 include('./includes/functions.php');
-/*
+
 if (!isLoggedIn()) {
     echo "<script type='text/javascript'>alert('$msg');</script>";
     //wrongUser();
     header("Location: index.php");
 } elseif ($_SESSION['userType'] == 'employee' || 'admin'){
     header("Location: dashboard.php");
-}  */
+}  
 
 ?>
 
@@ -33,7 +33,7 @@ if (!isLoggedIn()) {
 </head>
 <body >
    
-                                                       <!-- Top Header start-->
+                                                    <!-- Top Header start-->
     <header id="main-header" class="py-2 bg-dark p-0 text-white">
     <div class="container">
       <div class="row">
@@ -76,16 +76,12 @@ if (!isLoggedIn()) {
                   Remember me</label>
               </div>
                 <input type="submit" value="Login" name="Login" class="btn btn-primary btn-block">
-                
-	
               </form>                               <!-- Login form end -->
             </div>
           </div>
         </div>
       </div>
     </div>
-
-         
                                                     <!-- Footer start -->
   <footer id="main-footer"  class="bg-dark text-white mt-3 p-3" >
     <div class="container" >

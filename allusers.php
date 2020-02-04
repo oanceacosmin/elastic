@@ -36,19 +36,20 @@ include('includes/functions.php');
     <div class="row" style="margin-top: 15px">
         <div class="col-md-12">
           <div class="card">
-               <form name="newsTable" method="POST" action="allusers.php">
-            <div class="card-header">
+            
+                <div class="card-header">
                  <div class="row">
                     <div class="col col-lg-10 col-md-8 col-sm-8">
                           <h4>All users</h4>
                     </div>
                     <div class="col col-lg-2 col-md-4 col-sm-4 ">
-                      <a href="allusers.php?createuser" class="btn btn-primary text-light btn-block" name="createuser">
-                        <i class="fas fa-plus"></i> Create new user
-                      </a>
+                     <button class="btn btn-primary" data-toggle="modal" data-target="#addNewUserModal"><i class="fas fa-plus"></i> Create new user</button><br>
+                     
+                 
                     </div>
                  </div>
-            </div>
+              </div>
+            <form name="newsTable" method="POST" action="allusers.php">
             <div class="card-body">
              <div class="table-responsive">
              
@@ -56,11 +57,24 @@ include('includes/functions.php');
                 
             
             <?php 
-                    if(isset($_GET['createuser'])){
+                   
+                
+                    if(isset($_POST['crseateUser'])){
                         echo '<div class="alert alert-success" role="alert"> User privileges changed to admin.</div>
                         <button class="btn btn-dark"  onclick="history.go(-1);">Finish</button>';
                         exit();
                     }
+                
+                    if(isset($_POST['createUser'])){
+                        include 'database.php';
+                        $name = $_POST['username'];
+                        $email = $_POST['email'];
+                        $password = $_POST['password'];
+                        $sql = "INSERT INTO userdetails (email, password, fullName) VALUES ('$name', '$email', '$password')";
+                        $result = mysqli_query($conn, $sql);
+                        
+                    }
+                
                     if(isset($_GET['setadmin'])){
                         include 'database.php';
                         $postfromurl = $_GET['setadmin'];
@@ -104,7 +118,7 @@ include('includes/functions.php');
             $rescheck = mysqli_num_rows($result);   
             
             if ($rescheck == 0){
-                $alert = "There are no active posts.";
+                $alert = "Something went wrong.";
                 alertMessage($alert);
                 mysqli_close($conn);
         //if there is at least one result from db, show below.
@@ -170,20 +184,53 @@ include('includes/functions.php');
              
              </div>
             </div>
+            
             </form>
         </div> <!-- Edit profile Card End -->
         <br>
         </div> <!-- Column end -->
        
 
-    </div>
+                    </div>
                 </div> <!--- End dashboard content card-->
             </div> 
 
     <?php //include("sidebar.php");?>
-
+        
     </div>
-
+      <div class="modal fade text-dark" id="addNewUserModal"> <!-- Modal for contact us form start-->
+    <div class="modal-dialog">
+      <div class="modal-content">
+       <form class="form-horizontal" method="POST" action="allusers.php" id="createUserForm">
+        <div class="modal-header">
+          <h5 class="modal-title">Create user</h5>
+          <button class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        <form>
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" name="username" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" class="form-control" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+            <input type="password" class="form-control" name="password" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary btn-block" type="submit" id="createUser" name="submit" value="Create User">Submit</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>  
 	
 	<div style="margin-top:200px;"></div>
 
@@ -198,12 +245,14 @@ include('includes/functions.php');
         crossorigin="anonymous"></script>
        
 
+
+
   
   <script>
     var dropdown = document.getElementsByClassName("dropdown-btn");
       var i;
 
-for (i = 0; i < dropdown.length; i++) {
+    for (i = 0; i < dropdown.length; i++) {
   dropdown[i].addEventListener("click", function() {
     this.classList.toggle("active");
     var dropdownContent = this.nextElementSibling;
@@ -213,7 +262,26 @@ for (i = 0; i < dropdown.length; i++) {
       dropdownContent.style.display = "block";
     }
   });
-}</script>
+}
+
+$(document).ready(function()){
+                  $(document).on('click', '.view_data', function()){
+                                 $.ajax({
+                                 url:"allusers.php";
+                                 method:"POST";
+                                 
+                                 })
+                                 
+                                 }
+                  }
+
+
+
+
+
+
+
+</script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 

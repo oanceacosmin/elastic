@@ -20,43 +20,33 @@
     <body id="home" data-spy="scroll" data-target="#main-nav" class="" background= "img/Background-website-01.jpg">
     
     <nav class="navbar sticky-top navbar-expand-md navbar-dark bg-dark" id="main-nav">
-    <div class="container">
-     <div class="navbar-header">
-      <a href="dashboard.php" class="navbar-brand">
-        <img src="img/logo.png" width="45" height="45" alt="">
-        <h3 class="d-inline align-middle">ePortal</h3>
-      </a></div>
-      
-      
-      
-      <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav ml-auto">
-       <li><a class="btn btn-dark m-2" href="adminDashboard.php">Admin</a></li>
-        <li><a class="btn btn-dark m-2" href="dashboard.php">Dashboard</a></li>
-          <li><a class="btn btn-dark m-2" href="accdetails.php" >Account</a></li>
-          <li><form action="dashboard.php" method="POST">
-                <button type="submit" class="btn btn-dark m-2" name="logOut" >Log Out</button></form></li>
-           
+        <div class="container">
+             <div class="navbar-header">
+                  <a href="dashboard.php" class="navbar-brand">
+                    <img src="img/logo.png" width="45" height="45" alt="">
+                    <h3 class="d-inline align-middle">ePortal</h3>
+                  </a></div>
+          <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ml-auto">
+               <li><a class="btn btn-dark m-2" href="adminDashboard.php">Admin</a></li>
+                <li><a class="btn btn-dark m-2" href="dashboard.php">Dashboard</a></li>
+                  <li><a class="btn btn-dark m-2" href="accdetails.php" >Account</a></li>
+                  <li><form action="dashboard.php" method="POST">
+                        <button type="submit" class="btn btn-dark m-2" name="logOut" >Log Out</button></form></li>
+                    <?php 
+                        require_once 'includes/functions.php';
+                        if(isset($_POST['logOut'])){
+                        logOut();}  ?>            
 
+                </ul>
+                <form class="form-inline m-2" action="allNews.php" method="GET">
+                <input class="form-control mr-sm-2" type="text" name="Search" placeholder="Search">
+                <button class="btn btn-primary" type="submit" name="searchButton">Search</button>
+              </form>
 
-            <?php 
-                require_once 'includes/functions.php';
-                if(isset($_POST['logOut'])){
-                logOut();}
-                
-
-                
-                
-?>            
-        </ul>
-            <form class="form-inline m-2" action="allNews.php" method="GET">
-            <input class="form-control mr-sm-2" type="text" name="Search" placeholder="Search">
-            <button class="btn btn-primary" type="submit" name="searchButton">Search</button>
-          </form>
-       
-      </div>
+          </div>
     </div>
   </nav>

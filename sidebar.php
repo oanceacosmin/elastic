@@ -107,7 +107,7 @@
                     <div class="card-body bg-light">
                         <div class="row">    
                             <div class="col col-md-12"> 
-                <h4><a href="showPost.php?id=<?php echo $postID;?>"><?php
+                <h4><a href="showincident.php?id=<?php echo $postID;?>"><?php
                     echo $title;?></a></h4>
                 <h6>By: <a href="#"><?php echo $name; ?></a> On: <?php echo $date;?></h6>
                    <p><?php

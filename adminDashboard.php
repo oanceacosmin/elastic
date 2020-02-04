@@ -1,8 +1,8 @@
 <?php session_start();
 include('includes/functions.php');
 // Check if user is logged in - check usertype against database! 
-//if (!isLoggedIn()) {
-//    alertBackToMainPage();}?>
+if (!isLoggedIn()) {
+    alertBackToMainPage();}?>
     <?php include("header.php");?>
     <?php include("troubleshootingbar.php");?>
     
