@@ -22,20 +22,12 @@ function closeNav() {
        <!--- Left sidebar --->
         <div id="mySidebar" class="sidebar bg-dark " style="">
             <a href="#" class="closebtn" onclick="closeNav()">&times;</a>
-                 <a href="#" class="" onclick="closeNav()" style="text-align: center;"> &times;  Close</a>
-              <a href="#" class="sidebarItem" data-target="getStarted">Get Started</a>
-              <a href="#" class="sidebarItem" data-target="hardware">Hardware</a>
-              <a href="#" class="sidebarItem" data-target="getStarted">Software</a>
-            <a class="dropdown-btn" href="#">Dropdown
-            <i class="fa fa-caret-down"></i>
-            </a>
-            <div class="dropdown-container">
-                <a href="#" class="sidebarItem" >Link 1</a>
-                <a href="#" class="sidebarItem" >Link 2</a>
-                <a href="#">Link 3</a>
-            </div>
-              <a href="#">Connectivity</a>
-              <a href="#">Get Started</a> 
+            <a href="#" class="" onclick="closeNav()" style="text-align: center;"> &times;  Close</a>
+            <a href="#" class="sidebarItem" data-target="getStarted">Get Started</a>
+            <a href="#" class="sidebarItem" data-target="hardware">Hardware</a>
+            <a href="#" class="sidebarItem" data-target="getStarted">Software</a>
+            <a href="#">Connectivity</a>
+            <a href="#">Contact Us</a> 
         </div>
      <!--- Left sidebar opening button --->        
         <div id="main">

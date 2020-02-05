@@ -15,10 +15,7 @@
                     if(strpos($websiteURL, "allusers") !== false){
                        $active = "btn-light"; echo $active;} else {$active = "btn-dark"; echo $active;}?>" href="allusers.php" >Users</a> 
                     <a class="btn btn-dark m-2" href="#" >Troubleshooting</a> 
-                    <a class="btn btn-dark m-2" href="#" >News</a> 
-                    <a class="btn btn-dark m-2" href="#" >HREF TO php page</a> 
-                     <?php echo $websiteURL;?>
-                      </form>
+                    </form>
         </nav>
     </div>
 </div>
