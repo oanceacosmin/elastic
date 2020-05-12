@@ -5,34 +5,16 @@ if (!isLoggedIn()) {
     alertBackToMainPage();}?>
     <?php include("header.php");?>
     <?php include("troubleshootingbar.php");?>
-    
-
-   <!--- Top Navigation Bar -->
-
-    <?php  //Create a navbar with buttons for admin action categories -- Posts, Users, 
-
-?>
-    
-    
+   
 	<!--- Dashboard -->
     <div class="row" >
             <div class="col col-lg-7 offset-lg-2 col-md-10 offset-md-1 col-sm-12 col-xs-12" style="margin-top:30px;" id="content">
-            
-
                 <div class="card" id="dashcontent" ><!--- Dashboard content-->
                    <div class="card-header bg-dark text-light"> <!--- Card header -->
-                       
-                       
                      <!--- Dashboard Title-->
-
-                  
-    <?php  $websiteURL = "http://" . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];                      ?>      
-
+    <?php  $websiteURL = "http://" . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"]; ?>      
     <?php include('adminbar.php');?>
-                  
-                  
-                  
-                   </div> <!--- End card header -->
+                   </div> 
     <div class="row" style="margin-top: 15px">
         <div class="col-md-12">
           <div class="card">
@@ -56,18 +38,7 @@ if (!isLoggedIn()) {
                         echo '<div class="alert alert-success" role="alert"> Post approved.</div>
                         <button class="btn btn-dark"  onclick="history.go(-1);">Finish</button>';
                         exit(); }
-                
-                //not in use
-                    if(isset($_GET['deleteposttt'])){
-                        $postfromurl3 = $_GET['deletepost'];
-                        $deletesql = "DELETE FROM newsposts WHERE postID = '$postfromurl3'";
-                        include 'database.php';
-                        $delete = mysqli_query($conn, $deletesql);
-                        echo '<div class="alert alert-success" role="alert"> Post successfully deleted.</div><button class="btn btn-dark" onclick="history.go(-1);">Finish</button>';
-                        mysqli_close($conn);
-                        exit();
-                        
-                    }    
+ 
                     if(isset($_POST['delete'])){
                         $value = $_POST['delete'];
                         $deletesql = "DELETE FROM newsposts WHERE postID = '$value'";
@@ -92,11 +63,9 @@ if (!isLoggedIn()) {
                 ?>
             
             
-            <!-- Retrieve all posts from logged user-->
+            <!-- Retrieve all posts from database-->
            <?php 
             include 'database.php';
-            $email = $_SESSION["userEmail"];
-            //After setting the limit of retrieved posts to 5, user must choose page or result from 6 to 10
             $sql = "SELECT * FROM newsposts ORDER BY postDate DESC LIMIT 15"; 
             $result = mysqli_query($conn, $sql);
             $rescheck = mysqli_num_rows($result);    
@@ -105,7 +74,7 @@ if (!isLoggedIn()) {
                 $alert = "There are no active posts.";
                 alertMessage($alert);
                 mysqli_close($conn);
-        //if there is at least one result from db, show below.
+            //if there is at least one result from db, show below.
              } else {            ?> 
                <tr>
                      <th>Author</th>
@@ -116,16 +85,13 @@ if (!isLoggedIn()) {
                      <th></th>
                      <th></th>
                  </tr>  
-                 
-                 
              <?php  while($row = mysqli_fetch_assoc($result)){
                     $postId =  $row['postID'];
                     $approved = $row['approved'];
                     $name =  $row['postEmail'];
                     $date =  $row['postDate'];
                     $cat =  $row['postCat'];
-                    $title =  $row['postTitle'];
-                    //Remove html code from echo, set a max of char for each ?> 
+                    $title =  $row['postTitle'];?> 
                   <tr>
                      <td><?php echo $name;?></td>
                      <td><?php echo $date;?></td>
@@ -133,11 +99,8 @@ if (!isLoggedIn()) {
                      <td><?php echo $title;?></td>
                      <?php  
                   if(strpos($approved, 'No') !== false or $approved == null){ 
-                      
                         ?> <td><a href="adminDashboard.php?approve=<?php echo $postId;?>" class="btn btn-warning btn-block" name="approve"><?php echo "Approve";?></a></td>   <?php 
-
                         ?> <?php   
-               
                    } elseif(strpos($approved, 'Yes') !== false){
                       include 'database.php';
                       ?> <td><a href="adminDashboard.php?unapprove=<?php echo $postId;?>" class="btn btn-success btn-block" name="unapprove" ><?php echo "Undo";?></a>  

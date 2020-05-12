@@ -59,7 +59,7 @@ if (!isLoggedIn()) {
         crossorigin="anonymous"></script>
        
 
-  
+   <!-- Dropdown button action open and close -->
   <script>
     var dropdown = document.getElementsByClassName("dropdown-btn");
       var i;

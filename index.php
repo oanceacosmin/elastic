@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <?php 
 session_start();
-include('./includes/functions.php');
-
-if (!isLoggedIn()) {
-    echo "<script type='text/javascript'>alert('$msg');</script>";
-    //wrongUser();
-    header("Location: index.php");
+//Add file that contains all functions
+include_once('./includes/functions.php');
+//Check if user is logged in, redirect to dashboard if logged in. 
+if (!isLoggedIn()) {  
 } elseif ($_SESSION['userType'] == 'employee' || 'admin'){
     header("Location: dashboard.php");
-}  
-
+}
 ?>
 
 <html lang="en">
@@ -26,26 +23,23 @@ if (!isLoggedIn()) {
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
     crossorigin="anonymous">
         <link rel="stylesheet" href="css/style.css">
- 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
     crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css"/>
 </head>
-<body >
+<body>
    
-                                                    <!-- Top Header start-->
+                        <!-- Top Header starts-->
     <header id="main-header" class="py-2 bg-dark p-0 text-white">
     <div class="container">
       <div class="row">
         <div class="col-md-6">
-          
           <h1>
-            <a href="index.php" class=""><img src="img/logo.png" width="50" height="50" alt=""></a>  ePortal</h1> 
-            
+            <a href="index.php" class=""><img src="img/logo.png" width="50" height="50" alt=""></a>ePortal</h1> 
         </div>
       </div>
     </div>
-    </header>                                        <!-- Top Header end-->
+    </header>           <!-- Top Header ends-->
 
     
     <div class="container"> 
@@ -56,10 +50,11 @@ if (!isLoggedIn()) {
               <h4>Account Login</h4>
             </div>
             <div class="card-body" >
-              <form action="index.php" method="post"><!-- Login form start-->
-               
+              <form action="index.php" method="post"><!-- Login form starts-->
+              
                 <div class="form-group">
                  <?php if (isset($_POST['Login'])){
+                    include_once('./includes/functions.php');
                     logging();}?>
                   <label for="email">Corporate Email</label>
                   <input type="email" class="form-control" name="email" pattern=".+@eportal.com" required>
@@ -76,13 +71,13 @@ if (!isLoggedIn()) {
                   Remember me</label>
               </div>
                 <input type="submit" value="Login" name="Login" class="btn btn-primary btn-block">
-              </form>                               <!-- Login form end -->
+              </form>                               <!-- Login form ends -->
             </div>
           </div>
         </div>
       </div>
     </div>
-                                                    <!-- Footer start -->
+                                                    <!-- Footer starts -->
   <footer id="main-footer"  class="bg-dark text-white mt-3 p-3" >
     <div class="container" >
       <div class="row">
@@ -96,7 +91,7 @@ if (!isLoggedIn()) {
         </div>
       </div>
     </div>
-  </footer>                                        <!-- Footer end -->
+  </footer>                                        <!-- Footer ends -->
 	
   <div class="modal fade text-dark" id="contactModal"> <!-- Modal for contact us form start-->
     <div class="modal-dialog">

@@ -1,5 +1,5 @@
 <script>
-    
+/* Open bar */
 function openNav() {
     if(document.getElementById("mySidebar").style.width = "0"){
   document.getElementById("mySidebar").style.width = "250px";
@@ -10,8 +10,7 @@ function openNav() {
         document.getElementById("main").style.marginLeft = "0";
     }
 }
-
-/* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
+/* Close Bar - Set the width of the sidebar to 0 and the left margin of the page content to 0 */
 function closeNav() {
   document.getElementById("mySidebar").style.width = "0";
   document.getElementById("main").style.marginLeft = "0";
@@ -19,7 +18,7 @@ function closeNav() {
 }
   </script>
        
-       <!--- Left sidebar --->
+       <!--- Left sidebar content --->
         <div id="mySidebar" class="sidebar bg-dark " style="">
             <a href="#" class="closebtn" onclick="closeNav()">&times;</a>
             <a href="#" class="" onclick="closeNav()" style="text-align: center;"> &times;  Close</a>

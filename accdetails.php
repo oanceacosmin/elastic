@@ -2,16 +2,10 @@
 include './includes/functions.php';
 if (!isLoggedIn()) {
     alertBackToMainPage();
-    //wrongUser();
-   
 } elseif ($_SESSION['userType'] == 'admin' || 'employee'){
-   
 }
-?>
-              
-              
-        <?php include("header.php");?>
-        <?php include("troubleshootingbar.php");?>
+include("header.php");
+include("troubleshootingbar.php");?>
               
               
     <div class="row" ><!-- Content Starts -->
@@ -24,7 +18,6 @@ if (!isLoggedIn()) {
             </div><!-- Card header end -->
             
             <div class="card-body">
-     
                <div class="row" style="margin-top: 15px">
                     <div class="col-md-9">
                         <div class="card">
@@ -118,7 +111,7 @@ if (!isLoggedIn()) {
         </div>
         <div class="col-md-3">
           <h3>Your Avatar</h3>
-          <img src="img/avatar.png" alt="" class="d-block img-fluid mb-3">
+          <img src="userAvatars/<?php echo $_SESSION["useravatar"]; ?>" alt="userAvatars/avatar.png" class="d-block img-fluid mb-3">
           <button class="btn btn-primary btn-block">Edit Image</button>
           <button class="btn btn-danger btn-block">Delete Image</button>
         </div>
@@ -142,11 +135,11 @@ if (!isLoggedIn()) {
             <table class="table table-striped table-hover">
            
                  
-            <!-- Retrieve all posts from logged user-->
+            <!-- Retrieve all news posts from logged user-->
            <tr> <?php 
             include 'database.php';
             $email = $_SESSION["userEmail"];
-            $sql = "SELECT * FROM newsposts WHERE postEmail='$email'"; 
+            $sql = "SELECT * FROM newsposts WHERE postEmail='$email' ORDER BY postDate DESC LIMIT 5"; 
             $result = mysqli_query($conn, $sql);
             $rescheck = mysqli_num_rows($result);    
             
@@ -154,7 +147,7 @@ if (!isLoggedIn()) {
                 $alert = "You have no active posts.";
                 alertMessage($alert);
                 mysqli_close($conn);
-        //if there is one result, execute code between curly brackets
+            //if there is not 0, create content
              } else{ 
                 echo "<tr>
                      <th>Author</th>
@@ -163,8 +156,7 @@ if (!isLoggedIn()) {
                      <th>Post Title</th>
                      <th></th>
                      <th></th>
-                 </tr>";
-                
+                     </tr>";
                 while($row = mysqli_fetch_assoc($result)){
                     $name =  $row['postEmail'];
                     $date =  $row['postDate'];
@@ -177,11 +169,8 @@ if (!isLoggedIn()) {
                      <td>$title</td>
                      <td><button class='btn btn-primary btn-block'>Edit Post</button></td>
                      <td><button class='btn btn-danger btn-block'>Delete Post</button></td>
-                     
-                 </tr>";
-                    
-                }
-            } 
+                     </tr>";
+                }} 
                     
                ?> </tr>
 
@@ -225,7 +214,7 @@ if (!isLoggedIn()) {
            <tr> <?php 
             include('database.php');
             $email = $_SESSION["userEmail"];
-            $sql = "SELECT * FROM incidposts WHERE incEmail='$email'"; 
+            $sql = "SELECT * FROM incidposts WHERE incEmail='$email' ORDER BY incDate DESC LIMIT 5"; 
             $result = mysqli_query($conn, $sql);
               
             

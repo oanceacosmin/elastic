@@ -23,15 +23,8 @@ if (!isLoggedIn()) {
 
     <div class="row" id="addPost">
      <div class="col"> 
-        
-                
-            <?php   //Populate Dashboard with news results
+            <?php   //Populate Dashboard with data for post with id from URL
                     include('database.php');
-                    if(isset($_GET['searchButton'])){
-                        $search = $_GET['Search'];
-                        $sql = "SELECT * FROM newsposts WHERE postTitle LIKE '%$search%' or postDesc LIKE '%$search%' ";
-                    } else {
-                        
                         $approved = "Yes";
                         $postIdFromUrl = $_GET['id'];
                         $userType = $_SESSION['userType'];                        
@@ -39,21 +32,15 @@ if (!isLoggedIn()) {
                         $sql = "SELECT * FROM newsposts WHERE postID='$postIdFromUrl' AND approved = '$approved'";
                         } else{
                          $sql = "SELECT * FROM newsposts WHERE postID='$postIdFromUrl'";        } 
-                        
-                    }
-                    
-                    $result = mysqli_query($conn, $sql);
-
+                        $result = mysqli_query($conn, $sql);
+                    //Check if any result and display error
                     if(!$result or mysqli_num_rows($result) == 0){
                         $alert = "Post cannot be found.";
                         alertMessage($alert);
                         echo '<button class="btn btn-dark" onclick="history.go(-1);">Finish</button>';
                         mysqli_close($conn);
                         exit();
-                    } else{ 
-
-                    
-                    
+                    } else{ //Store results from DB and display in card
                     while($row = mysqli_fetch_assoc($result)){
                     $postID = $row['postID'];
                     $name =  $row['postEmail'];
@@ -69,7 +56,6 @@ if (!isLoggedIn()) {
                          function callfun(obj){
                                 var noimg = "<?php echo $altImagePath;?>";
                                 obj.src=noimg;}
-                        
                     </script>
                     <div class="card">
                         <div class="card-body bg-light">
@@ -89,7 +75,6 @@ if (!isLoggedIn()) {
                                 <div class="col col-md-6 mr-auto">
                                     <img src="./Uploads/<?php echo $imageName; ?>"  alt="" onerror="this.onerror=null; callfun(this);" class="img-fluid thumbnail">
                                 </div>
-                                
                            </div>
                            <hr>
                             <div class="row"> 
@@ -99,43 +84,29 @@ if (!isLoggedIn()) {
                                 </div>
                            </div>
                            <br><hr>
-
                         </div>
                     </div>
-                    
-                        
              <?php      
-                    }
-                }
-                
-                
-                
+                    }}
                 ?>
-            
-
-
-
                 </div>
             </div>
         </div>
      </div>  
 </div><br>
-               <div class="row">
+               <div class="row"> <!-- Comments section -->
                <div class="col col-md-6 offset-md-3 col-sm-8 offset-sm-2 bg-light">
                 <div class="card">
-                  <div class="card-header bg-dark text-white">
+                  <div class="card-header bg-dark text-white"> 
                       <h4 class="card-title">Comments section:</h4>
                   </div>
                   <span class="border border-dark">
                    <div class="card-body bg-light">
                     <div class="row"> 
                         <div class="col col-md-10 offset-md-1">
-                            
-
                         <?php 
                             include('database.php');
                             $comments = "SELECT * FROM newscomments WHERE newsPostID =".$postIdFromUrl." ORDER BY commDate asc";
-                            
                             $postNumber = 1;
                             $commresult = mysqli_query($conn, $comments);
                             while($row = mysqli_fetch_assoc($commresult)){
@@ -160,10 +131,7 @@ if (!isLoggedIn()) {
                                 var noimg = "<?php echo $userAltImage;?>";
                                 obj.src=noimg;}
                     </script>
-                            <img src="<?php echo $userImage; ?>"  alt="" onerror="this.onerror=null; callfun(this);" class="img-thumbnail" style="image-orientation:from-image;">
-                                
-                          
-                            
+                            <img src="<?php echo $userImage; ?>"  alt="" onerror="this.onerror=null; callfun(this);" class="img-thumbnail" style="image-orientation:from-image;">  
                             </div>
                                 <div class="col col-md-9">
                                   <div class="row">
@@ -179,19 +147,17 @@ if (!isLoggedIn()) {
                                     <div class="row">
                                        <div class="col col-md-12 align-items-end">
                                         <br><p><?php echo $content;?></p>
-                                        </div>
-                                        
+                                        </div>      
                                     </div>
                                 </div>
                             </div><hr>
                             
                             <?php     
                             $postNumber = $postNumber + 1;}
-                                
                             ?>       
                                 <form action="showPost.php?id=<?php echo $postID;?>" method="POST">
                                <fieldset>
-        <!-- Category and image select row ends-->
+                            <!-- Category and image select row ends-->
                         <div class="form-group"> <!-- Post content row -->
                             <label for="postArea"><span class="FieldInfo">Add a comment</span></label>
                             
@@ -201,10 +167,10 @@ if (!isLoggedIn()) {
                         <br>
       
                             </fieldset> </form>
-                            <?php 
+                            <?php //Submit Comment
                             if(isset($_POST['submitComment'])){
                                 $author = $_SESSION['userEmail'];
-                                $content = $_POST['Post'];
+                                $content = mysqli_real_escape_string($conn, $_POST['Post']);
                                 $commsql = "INSERT INTO newscomments (newsPostID, author, content, commDate) VALUES ('$postIdFromUrl', '$author', '$content', CURRENT_TIMESTAMP)";
                                 $executesql = mysqli_query($conn, $commsql);
                                 if($executesql){
@@ -224,7 +190,7 @@ if (!isLoggedIn()) {
                 </div>
             </div>
 	
-	<div style="margin-top:100px;"></div>
+	
 
 <?php include("footer.php");
 
@@ -268,7 +234,6 @@ function elapsedTimeString($start, $end = null, $limit = null, $filter = true, $
 
     return $dates->start->format($format) ? : $elapsed->unknown;
 }
-
 ?>
 
    
@@ -296,16 +261,7 @@ for (i = 0; i < dropdown.length; i++) {
     }
   });
 }</script>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-
-
-
-
-
-
-    
-    
     <?php   ?>
     
 </body>

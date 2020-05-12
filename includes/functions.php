@@ -76,9 +76,7 @@ function logging(){
                     $_SESSION['telephone'] = $row['telephone'];
                     $_SESSION['userType'] = $row['userType'];
                     $_SESSION['department'] = $row['department'];
-                //If logged user is admin, will be redirected to admin dashboard
-
-                //If user is registered will be redirected to user dashboard
+                    $_SESSION['useravatar'] = $row['avatar'];
                     header("Location: dashboard.php");
                     mysqli_close($conn);
                 } 
