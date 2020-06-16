@@ -45,13 +45,16 @@ include("troubleshootingbar.php");?>
                     $result = mysqli_query($conn, $sql); // Record time of query execution 
                     $time_end = microtime_float();
                     $time = $time_end - $time_start;
+                    $time = $time * 1000;
+                    $time = round($time, 3);
+                    
                 if(mysqli_num_rows($result) == 0){   //If no results, display no active posts
                     $alert = "There are no active posts.";
                     alertMessage($alert);
-                    echo '<div class="alert alert-primary" role="alert"> Query execution time: ' . $time * 1000 . " Milliseconds</div>";
+                    echo '<div class="alert alert-primary" role="alert"> Query execution time: ' . $time . " Seconds</div>";
                     mysqli_close($conn);
                 } else{ //If at least 1 result, display each result
-                    echo '<div class="alert alert-primary" role="alert"> Query execution time: ' . $time * 1000 . " Milliseconds</div>";
+                    echo '<div class="alert alert-primary" role="alert"> Query execution time: ' . $time . " Seconds</div>";
                     mysqli_close($conn);
                     while($row = mysqli_fetch_assoc($result)){
                     $postID = $row['postID'];

@@ -76,7 +76,6 @@ include('includes/functions.php');
                         echo '<div class="alert alert-success" role="alert"> User created.</div>
                         <button class="btn btn-dark"  onclick="history.go(-1);">Finish</button>';
                         exit();
-                        
                     }
                 
                     if(isset($_GET['setadmin'])){
@@ -120,25 +119,20 @@ include('includes/functions.php');
             $sql = "SELECT * FROM userdetails LIMIT 15"; 
             $result = mysqli_query($conn, $sql);
             $rescheck = mysqli_num_rows($result);   
-            
             if ($rescheck == 0){
                 $alert = "Something went wrong.";
                 alertMessage($alert);
                 mysqli_close($conn);
-        //if there is at least one result from db, show below.
              } else {            ?> 
                <tr>
                      <th>Name</th>
                      <th>Email</th>
-                    
                      <th>Postal code</th>
                      <th>Telephone</th>
                      <th>Department</th>
                      <th>User type</th>
                     <th></th><th></th>
                 </tr>
-                 
-                 
              <?php  while($row = mysqli_fetch_assoc($result)){
                     $userId =  $row['userID'];
                     $name = $row['fullName'];
@@ -169,12 +163,9 @@ include('includes/functions.php');
                      </td>
                        <?php
                     } else {
-                      
                       }
                       
                       ?>
-                     
-                     
                      <td><a href="allusers.php?deleteuser=<?php echo $userId;?>" class="btn btn-danger btn-block" name="deleteuser" ><?php echo "Delete User";?></a></td>
                      
                  </tr> <?php

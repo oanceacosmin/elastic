@@ -40,9 +40,9 @@ include("troubleshootingbar.php");?>
                         exit();
                         }else{
                             //include("./includes/database.php");
-                             date_default_timezone_set("Europe/London");
+                            date_default_timezone_set("Europe/London");
                             $currentTime = date('H:i d.m.Y');
-                            $sql = "INSERT INTO newsposts(postEmail, postTitle, postDate, postCat, postDesc, postContent, image, approved) VALUES ('$authorID', '$title' , '$currentTime' ,'$category', '$desc', '$post', '$image', '$approved')";
+                            $sql = "INSERT INTO newsposts(postEmail, postTitle, postDate, postCat, postDesc, postContent, image, approved) VALUES ('$authorID', '$title' , CURRENT_TIMESTAMP ,'$category', '$desc', '$post', '$image', '$approved')";
                             $location = "Uploads/";
                             move_uploaded_file($tempName, $location . $image);
                             $execute = mysqli_query($conn, $sql);

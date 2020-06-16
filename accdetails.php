@@ -9,7 +9,7 @@ include("troubleshootingbar.php");?>
               
               
     <div class="row" ><!-- Content Starts -->
-        <div class="col col-lg-7 offset-lg-2 col-md-11 offset-md-1 col-sm-12 col-xs-12" style="margin-top:30px;" id="content">
+        <div class="col col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-12 col-xs-12" style="margin-top:30px;" id="content">
               <!-- Card header -->
               
           <div class="card" id="dashcontent" >

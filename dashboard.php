@@ -30,8 +30,8 @@ if (!isLoggedIn()) {
                          
                          <br>
                          <h1>Welcome!</h1>
-                         <h3 class="">We are ePortal, and we are here to help you with your workplace connection. Get started by clicking the link below.</h3>
-                         <button class="btn btn-primary btn-block">Get Started</button>
+                         <h3 class="">We are ePortal, and we are here to help you with connecting with your workplace. Get started by clicking the link below.</h3><br>
+                         <button class="btn btn-primary btn-block">Get Started</button><br>
                          </div>
                           
                       </div><!--- End row -->

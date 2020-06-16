@@ -17,7 +17,7 @@ if (!isLoggedIn()) {
         <meta name="description" content="Private Employee Portal">
         <meta name="keywords" content="Employee Portal">
         <meta name="author" content="C. D. Oancea">
-        <title>Employee Portal</title>
+        <title> Employee Portal</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
         crossorigin="anonymous">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
@@ -35,7 +35,7 @@ if (!isLoggedIn()) {
       <div class="row">
         <div class="col-md-6">
           <h1>
-            <a href="index.php" class=""><img src="img/logo.png" width="50" height="50" alt=""></a>ePortal</h1> 
+            <a href="index.php" class=""><img src="img/logo.png" width="50" height="50" alt=""></a> ePortal</h1> 
         </div>
       </div>
     </div>
@@ -85,7 +85,7 @@ if (!isLoggedIn()) {
           <p class="lead">
             Copyright &copy;
             <span id="year"></span>
-            ePortal
+             ePortal
           </p>
           <button class="btn btn-primary" data-toggle="modal" data-target="#contactModal">Contact Us</button>
         </div>

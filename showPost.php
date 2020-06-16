@@ -106,7 +106,7 @@ if (!isLoggedIn()) {
                         <div class="col col-md-10 offset-md-1">
                         <?php 
                             include('database.php');
-                            $comments = "SELECT * FROM newscomments WHERE newsPostID =".$postIdFromUrl." ORDER BY commDate asc";
+                            $comments = "SELECT * FROM newscomments WHERE newsPostID =".$postIdFromUrl." ORDER BY commDate desc";
                             $postNumber = 1;
                             $commresult = mysqli_query($conn, $comments);
                             while($row = mysqli_fetch_assoc($commresult)){
@@ -117,7 +117,7 @@ if (!isLoggedIn()) {
                                 $content = $row['content'];
                                 $commdate = $row['commDate'];
                                 $commtime = strtotime($commdate);
-                                $finaldate = date('H:i d.m.Y', $commtime);
+                                $finaldate = date('H:i:s d.m.Y', $commtime);
                                 $getUserDet = "SELECT * FROM userdetails WHERE email ='$name'";
                                 $commuser = mysqli_query($conn, $getUserDet);
                                 $commuserrow = mysqli_fetch_assoc($commuser);
@@ -174,7 +174,7 @@ if (!isLoggedIn()) {
                                 $commsql = "INSERT INTO newscomments (newsPostID, author, content, commDate) VALUES ('$postIdFromUrl', '$author', '$content', CURRENT_TIMESTAMP)";
                                 $executesql = mysqli_query($conn, $commsql);
                                 if($executesql){
-                                $msg = "Post successfully added.";
+                                $msg = "Comment successfully added.";
                                 successMessage($msg);
                                 echo '<button class="btn btn-dark" onclick="window.location.href=window.location.href">Refresh</button>';
                                  exit();

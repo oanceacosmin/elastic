@@ -60,20 +60,20 @@ if (!isLoggedIn()) {
                     //$qtime = microtime(true)-$qtime;
                     $time_end = microtime_float();
                     $time = $time_end - $time_start;
-         
-                    
+                    $time = $time * 1000;
+                    $time = round($time, 3);
                 if(mysqli_num_rows($result) == 0){
                     $alert = "There are no active posts.";
                     alertMessage($alert);
                     echo '<div class="alert alert-primary" role="alert">
             Query execution time: 
-' . $time * 1000 . " Milliseconds</div>";
+' . $time . " Milliseconds</div>";
                     mysqli_close($conn);
                     
                 } else{ 
                     echo '<div class="alert alert-primary" role="alert">
             Query took: 
-' . $time * 1000 . " Milliseconds</div>";
+' . $time . " Milliseconds</div>";
                     mysqli_close($conn);
                     while($row = mysqli_fetch_assoc($result)){
                     $incID = $row['incID'];
@@ -83,6 +83,7 @@ if (!isLoggedIn()) {
                     $time = strtotime($dbdate);
                     $title =  $row['incTitle'];  
                     $content =  $row['incContent'];
+                    $image = $row['image'];
                     $altImagePath =  "./Uploads/eportal.jpg";
                     $date = date('H:i d.m.Y', $time);
                     //$imageName = $row['image']; ?>
@@ -97,7 +98,7 @@ if (!isLoggedIn()) {
                         <div class="card-body">
                             <div class="row align-items-center"> 
                                 <div class="col col-md-4 col-sm-12 col-xs-12">
-                                    <img src="Uploads/<?php echo $altImagePath; ?>"  alt="" onerror="this.onerror=null; callfun(this);" class="img-thumbnail" style="image-orientation:from-image;">
+                                    <img src="Uploads/<?php echo $image; ?>"  alt="" onerror="this.onerror=null; callfun(this);" class="img-thumbnail" style="image-orientation:from-image;">
                                 </div>
                                 <div class="col col-md-8 col-sm-12 col-xs-12">
                                    <div class="row">

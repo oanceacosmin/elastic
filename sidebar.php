@@ -16,16 +16,18 @@
                     $result = mysqli_query($conn, $sql);
                     $time_end = microtime_float();
                     $time = $time_end - $time_start;
+                    $time = $time * 1000;
+                    $time = round($time, 3);
 /* Check if at least 1 result is retrieved */
                     if(!$result or mysqli_num_rows($result) == 0){
                         $alert = "There are no active posts.";
                         alertMessage($alert);
                         echo '<div class="alert alert-primary" role="alert">
                                 Query execution time: 
-                                ' . $time * 1000 . " Milliseconds</div>";
+                                ' . $time . " Milliseconds</div>";
 /* If at least 1 result, store result in associative array and display each in while loop*/
                     } else{
-                        echo '<div class="alert alert-primary" role="alert"> Query took: ' . $time * 1000 . " Milliseconds</div>";
+                        echo '<div class="alert alert-primary" role="alert"> Query took: ' . $time . " Seconds</div>";
                         while($row = mysqli_fetch_assoc($result)){ /* Store data from each row */
                         $postID = $row['postID'];
                         $name =  $row['postEmail'];
@@ -60,12 +62,14 @@
                     <a href="allincidents.php" class="rightSideContent text-light"><h3>Latest Incidents</h3></a> 
                 </div>
              <?php $approved = "Yes";
-                    $sqlInc = "SELECT * FROM incidposts WHERE approved = '$approved' ORDER BY incDate DESC LIMIT 4"; 
+                    $sqlInc = "SELECT * FROM incidposts WHERE approved = '$approved' ORDER BY incDate DESC LIMIT 3"; 
                     $time_start = microtime_float();
                     $resultInc = mysqli_query($conn, $sqlInc);
                     $time_end = microtime_float();
                     $time = $time_end - $time_start;
-                    echo '<div class="alert alert-primary" role="alert"> Query execution time: ' . $time * 1000 . " Milliseconds</div>";
+                    $time = $time * 1000;
+                    $time = round($time, 3);
+                    echo '<div class="alert alert-primary" role="alert"> Query took: ' . $time . " Seconds</div>";
                     if(!$resultInc or mysqli_num_rows($resultInc) == 0){
                         $alert = "There are no active posts.";
                         alertMessage($alert);
